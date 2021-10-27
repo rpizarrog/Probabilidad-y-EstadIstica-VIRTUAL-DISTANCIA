@@ -1,1 +1,3 @@
-# Probabillidad-y-EstadIstica-VIRTUAL-DISTANCIA
+# Probabillidad-y-Estadística-VIRTUAL-DISTANCIA
+
+Son recursos didácticos para la clase
