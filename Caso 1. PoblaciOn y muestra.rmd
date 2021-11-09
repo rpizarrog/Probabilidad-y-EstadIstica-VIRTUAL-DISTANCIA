@@ -1,0 +1,230 @@
+---
+title: "Caso 1. Población y muestra"
+author: "Rubén Pizarro Gurrola"
+date: "30/10/2021"
+output: 
+  html_document:
+    code_folding: hide
+    toc: true
+    toc_float: true
+    toc_depth: 6
+---
+
+# Objetivo
+
+Identificar datos de población y muestra.
+
+# Descripción
+
+Se cargan datos de un archivo que representa una población de jugadores de fútbol a nivel mundial y se extraen muestras que permiten observar algunos estadísticos. Las variables de interés son nacionalidad, edad, altura y peso.
+
+La población contiene datos de futbolistas registrados en FIFA. Aquí se hace hincapié en que tal vez no sean todos los futbolistas profesionales, es una lista que se encuentra en portales abiertos con archivos descargables, de manera especiíica el archivo original se encuentra en la direción url siguiente: [\<https://www.kaggle.com/stefanoleone992/fifa-20-complete-player-dataset?select=players_20.csv\>](https://www.kaggle.com/stefanoleone992/fifa-20-complete-player-dataset?select=players_20.csv "kaggle.com")
+
+A partir de la población se construyen varias muestras utilizando la función *sample()*.
+
+# Desarrollo
+
+## Cargar librerías
+
+```{r}
+library(readr)
+```
+
+## Población
+
+En una variable llamada *poblacion*, se carga un conjunto de datos con distintas variables o columnas.
+
+```{r}
+poblacion <- read.csv("https://raw.githubusercontent.com/rpizarrog/Probabilidad-y-EstadIstica-VIRTUAL-DISTANCIA/main/datos/players_20.csv", encoding = "UTF-8", stringsAsFactors = TRUE)
+```
+
+La población es un conjunto de datos que contiene 18278 observaciones o registros y 104 variables o columnas.
+
+Las variables de interés para este caso serán: nombre, nacionalidad, edad, estatura y peso ('short_name', 'nationality', 'age', 'height_cm', 'weight_kg').
+
+De la población se extraen únicamente las columnas de interés usando la notación *['nombre columna 1', 'nombre de columna 2', 'nombre de columna n'].*
+
+La variable en donde se vuelve a dejar el extracto de los datos de población únicamente cn las columnas elegidas, es nuevamente *poblacion*, es decir se actualiza y se sobreescribe la variable.
+
+Con el argumento la expresión *[,c('short_name', 'nationality', 'age', 'height_cm', 'weight_kg')]*, se extraen todas las observaciones o registros con las columnas indicadas de *poblacion*.
+
+```{r}
+poblacion <- poblacion[,c('short_name', 'nationality', 'age', 'height_cm', 'weight_kg')]
+
+
+```
+
+### Modificar nombres de columnas
+
+Con la función *colnames(poblacion)* se modifica a español los nombres de columnas
+
+```{r}
+colnames(poblacion) <- c('nombre', 'nacion', 'edad', 'estatura', 'peso')
+
+```
+
+### Primeros 20 registros
+
+Con la función *head(poblacion, 20)* indicándole 20 se presentan los primeros 20 registros
+
+```{r}
+head(poblacion)
+
+```
+
+### Ultimos 20 registros
+
+Con la función *tail(poblacion, 20)* indicándole 20 se presentan los últimos 20 registros
+
+```{r}
+tail(poblacion)
+
+```
+
+### Estructura de los datos
+
+Con la función *str()* se identifica el tipo de datos, la cantidad de registros y columnas que tienen la población.
+
+Ahora la población tiene le mismo número de registros pero con 5 variables de estudio en lugar de las 50 iniciales.
+
+```{r}
+str(poblacion)
+
+```
+
+### Describir los datos
+
+Con la función *summary()* se encuentran los parámetros de la población.
+
+Las medidas que genera *summary()* para datos numéricos o cuantitativos son la media, mediana, valores máximos y mínimos, cuartiles al 25%, 50% y 75% que serán medidas que se estudiarán por separado en siguientes casos.
+
+Con datos cualitativos categóricos o denotados como factores en R, se identifican la cantidad de ocasiones que hay de cada uno, es decir la frecuencia. De igual forma la función identifica si existen datos como NA que se interpreta como datos vacíos.
+
+```{r}
+summary(poblacion)
+
+```
+
+## Muestra
+
+Se identifica como $N$ como el total de registros de la población y se obtiene mediante la función *nrow().*
+
+```{r}
+N <- nrow(poblacion)
+N
+
+```
+
+### Muestra1
+
+Se extra con la función sample() una muestra de la población digamos el $10\% \text{ de 18278 equivale a }1828 \ registros$
+
+Se identifica a $n$ como la cantidad de registros de la muestra.
+
+Con la función *round()* se redondea a valor entero el resultado de sacar el 10% de $N$.
+
+```{r}
+n <- round(N * 0.10)
+n
+```
+
+Ahora se determina una muestra de los datos con la función *sample(),* con los parámetro adecuados se le dice que a partir de población se deben extraer $n$ registros y que no se repitan, es decir que sean diferentes.
+
+La variable de interés es edad por lo que la muestra es un vector numérico.
+
+```{r}
+muestra1 <- sample(x = poblacion$edad, size = n, replace = FALSE)
+
+
+```
+
+#### Descripción de muestra1
+
+```{r}
+str(muestra1)
+summary(muestra1)
+
+```
+
+#### Media de edad muestra1
+
+```{r}
+media1 <- round(summary(muestra1)[4],2)
+media1
+```
+
+### Muestra2
+
+Se extra con la función sample() una muestra de la población digamos el $20\% \text{ de 18278 equivale a }3656\ registros$.
+
+```{r}
+n <- round(N * 0.20)
+n
+```
+
+Se determina otra muestra de los datos con la función *sample(),* el nombre ahora es *muestra2*.
+
+```{r}
+muestra2 <- sample(x = poblacion$edad, size = n, replace = FALSE)
+
+
+```
+
+#### Descripción de muestra2
+
+```{r}
+str(muestra2)
+summary(muestra2)
+
+```
+
+#### Media de edad muestra2
+
+```{r}
+media2 <- round(summary(muestra2)[4],2)
+media2
+```
+
+### Muestra3
+
+Se extra con la función sample() una muestra de la población digamos el $30\% \text{ de 18278 equivale a }5483 \ registros$
+
+Se determina otra tercera muestra de los datos con la función *sample(),* el nombre ahora es *muestra3*.
+
+```{r}
+n <- round(N * 0.30)
+n
+```
+
+Se determina otra muestra de los datos con la función *sample(),* el nombre ahora es *muestra3*.
+
+```{r}
+muestra3 <- sample(x = poblacion$edad, size = n, replace = FALSE)
+
+
+```
+
+#### Descripción de muestra3
+
+```{r}
+str(muestra3)
+summary(muestra3)
+
+```
+
+#### Media de edad muestra3
+
+```{r}
+media3 <- round(summary(muestra3)[4],2)
+media3
+```
+
+# Interpretación
+
+Se construyen tres muestras a partir de una población que contiene $18278$ registros y $5$ variables de interés.
+
+La muestra1 contiene $1828$ registros, la muestra2 tiene $3656$ registros y la muestra3 tiene $5483$ registros.
+
+Si la variable de interés es la edad, la media de la edad de la población es $25.28$ años, los valores de la media de edad de cada muestras son: de la muestra1 su media de edad es **`r media1`**, de la muestra2 su media de edad es **`r media2`** y de la muestra3 su media de edad es **`r media3`.**
+
+Con lo anterior se entiende que los estadísticos de una muestra deben acerarse en mucho a los parámetros poblacionales. ejemplo de ello, los valores de la media de cada muestra se acercan a los valores de la media de la población. $\text{media de muestra} \approx \text{media poblacion}$
