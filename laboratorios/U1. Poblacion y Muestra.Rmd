@@ -1,0 +1,64 @@
+---
+author: "Rubén Pizarro Gurrola"
+date: "9/11/2021"
+title: "Tutorial"
+output: learnr::tutorial
+runtime: shiny_prerendered
+---
+
+```{r message=FALSE, warning=FALSE, include=FALSE}
+library(learnr)
+
+```
+
+
+```{r include=FALSE}
+# set.seed(2021)
+```
+
+# Población y muestra
+
+Crear una población de 1000 números en un rango de 100 a 999 se, pueden repetir relacionado un contexto de precios de zapatos.
+
+```{r }
+poblacion <- round(rnorm(n = 10000, mean = 500, sd = 50),0)
+poblacion
+
+summary(poblacion)
+```
+
+Es una muestra de 100 datos de la poblacion
+```{r include=FALSE}
+muestra <- sample(x = poblacion, size = 100, replace = TRUE)
+cat(muestra,sep = ",")
+media <- mean(muestra)
+```
+
+Este código calcula la media de la muestra
+
+```{r media_muestra, exercise=TRUE}
+# mean(muestra)
+```
+
+```{r media, echo=FALSE}
+muestra
+question("Cuál es la media de de l muestra",
+  answer("499.95"),
+  answer("502.5"),
+  answer(as.character(media), correct = TRUE),
+  answer("500.95"), random_answer_order	
+=TRUE)
+```
+
+* Submit `1+1` to receive a correct grade.
+
+```{r exercise1, exercise = TRUE}
+
+```
+ 
+```{r exercise1-check}
+grade_result(
+  pass_if(~identical(.result, 2))
+)
+```
+
