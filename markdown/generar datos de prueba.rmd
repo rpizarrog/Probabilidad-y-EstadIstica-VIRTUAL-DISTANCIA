@@ -1,0 +1,87 @@
+---
+title: "generar datos de prueba"
+author: "Rubén Pizarro Gurrola"
+date: "10/11/2021"
+output: 
+  html_document:
+    code_folding: hide
+    toc: true
+    toc_float: true
+    toc_depth: 6
+---
+
+# Objetivo
+
+Simular la creación de un conjunto de datos
+
+Aspectos generales del caso
+
+# Descripción
+
+Simular la creación de un conjunto de alumnos con ciertas variables o características.
+
+Se reutiliza una función previamente programada.
+
+# Desarrollo
+
+## Cargar la función
+
+Se carga la función que se encuentra en *github.com*
+
+```{r}
+source("https://raw.githubusercontent.com/rpizarrog/Probabilidad-y-EstadIstica-VIRTUAL-DISTANCIA/main/funciones/funcion%20crea%20alumnos.r") 
+```
+
+## Crear alumnos
+
+Se crea un conjunto de datos en un *data.frame* llamado alumnos.
+
+```{r}
+alumnos <- genAlumnos(5000, 2021)
+
+```
+
+## Factorizar alumnos
+
+Factorizar significa categorizar variables que son de tipo *character* o textos y tiene utilizar para identificar frecuencias con la función *summary()*.
+
+```{r}
+alumnos$matricula <- as.factor(alumnos$matricula)
+alumnos$carrera <- as.factor(alumnos$carrera)
+alumnos$genero <- as.factor(alumnos$genero)
+
+```
+
+### Mostrar diez registros iniciales
+
+```{r}
+head(alumnos, 10)
+```
+
+### Mostrar diez registros finales
+
+```{r}
+tail(alumnos, 10)
+```
+
+### Estructura de los datos
+
+```{r}
+str(alumnos)
+```
+
+### Describir los datos
+
+```{r}
+summary(alumnos)
+```
+
+# Interpretación
+
+Se crea un conjunto de datos llamado alumnos a partir de funciones previamente programadas.
+
+Se simulan 5000 observaciones con siete variables
+
+Existen mas alumnos del género M que F
+
+Hay más alumno de las carrera de TIC en relación con otras.

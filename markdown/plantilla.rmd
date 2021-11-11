@@ -1,0 +1,31 @@
+---
+title: "Plantilla casos"
+author: "Su nombre completo"
+date: "19/10/2021"
+output: 
+  html_document:
+    code_folding: hide
+    toc: true
+    toc_float: true
+    toc_depth: 6
+---
+
+# Objetivo
+## dos niveles
+### tres niveles
+
+¿Cuál es el objetivo?
+
+# Descripción
+
+Aspectos generales del caso
+
+# Desarrollo
+
+Los pasos que se siguen orientados a como lo identifica la descripción
+
+# Interpretación
+
+Son ideas personales de los participantes, alumnos sobre lo que se desarrolla, a que conclusiones llegan
+
+Dos o tras párrafos de 50 palabras cada uno aproximadamente.

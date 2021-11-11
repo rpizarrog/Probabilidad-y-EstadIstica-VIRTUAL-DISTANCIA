@@ -1,0 +1,36 @@
+---
+title: "caso prueba"
+author: "Rubén Pizarro Gurrola"
+date: "8/11/2021"
+output: html_document
+---
+
+# Objetivo
+
+Construir un conjunto de datos personas
+
+# Descripción 
+
+Contruir conjunto de datos personas con dos variables: nombres y edades
+
+# Desarrollo 
+
+## Contruir los datos
+```{r}
+nombres <- c("RUBEN", "PATY", "OSCAR", "LUIS", "ERNESTO", "OLGA")
+edades <- c(52, 43, 23, 25, 34, 18)
+
+nombres
+edades
+```
+
+
+Crear el data.frame
+```{r}
+personas <- data.frame(nombres, edades )
+personas
+```
+
+# Interpretación
+
+Se construyó un conjunto de datos laamado personas de dos variables
