@@ -1,5 +1,13 @@
+# Vectores iniciales
+carreras <- c("ARQUITECTURA", "ADMINISTRACION", "BIOQUIMICA",
+              "CIVIL", "ELECTRICA", "ELECTRONICA",
+              "INDUSTRIAL", "INFORMATICA", "MECANICA", 
+              "MECATRONICA", "SISTEMAS", "TIC","QUIMICA")
+generos <- c('M', 'F')
+
 # semilla inicial
-set.seed(1)
+
+set.seed(1) # No la necesita
 
 getMatriculas <- function(n) {
   c(1:n)
