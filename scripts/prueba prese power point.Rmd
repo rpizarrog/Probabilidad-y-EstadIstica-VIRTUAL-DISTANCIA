@@ -1,0 +1,32 @@
+---
+title: "prueba"
+author: "Rubén Pizarro Gurrola"
+date: "15/10/2021"
+output: powerpoint_presentation
+---
+
+# Objetivo
+
+Hacer una presentación de prueba
+
+# Desarrollo
+
+## Cargar librerías
+
+Se carga la librería para gráficos dinámicos
+```{r message=FALSE, warning=FALSE, paged.print=FALSE}
+
+library(plotly)
+
+```
+
+## Crear los datos
+Se crea un conjunto de datos
+
+```{r}
+estaturas1 <- rnorm(100, mean = 170, sd = 5)
+estaturas2 <- rnorm(100, mean = 175, sd = 6)
+
+estaturas <- data.frame(estaturas1, estaturas2)
+```
+

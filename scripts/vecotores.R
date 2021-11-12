@@ -1,0 +1,25 @@
+# Segundo programa llamado vectores
+# Vectores es una variable que almacena un conjunto de valores
+
+# Crear vectores
+nombres <- c("Rubén", "Paty", "Lucy", "Carlos", "Lalo")  # c() función para identifiacr o notar varios elementos
+edades <- c(51, 34, 43, 35, 65)
+
+# Mostrar vectores
+nombres
+edades
+
+# Acceder a ciertos elementos de un vector
+nombres[3]
+edades[3]
+
+nombres[1:3]
+
+nombres[-4]
+
+
+
+
+
+
+
