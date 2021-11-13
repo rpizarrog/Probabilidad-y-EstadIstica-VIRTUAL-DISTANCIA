@@ -29,10 +29,10 @@ De un conjunto de datos que tiene variables como el nombre de la persona y la ed
 
 ## Cargar librerías
 
-```{r}
-# ¿cuáles librerías a cargar?
-# Leer datos
-# Determinar tabla de freciencoas
+```{r message=FALSE, warning=FALSE}
+library(readr)
+library(fdth)
+library(knitr)
 ```
 
 ## Cargar los datos
@@ -40,27 +40,38 @@ De un conjunto de datos que tiene variables como el nombre de la persona y la ed
 CArgar los datos desde github: <https://raw.githubusercontent.com/rpizarrog/Probabilidad-y-EstadIstica-VIRTUAL-DISTANCIA/main/datos/nombres%20dades.csv>
 
 ```{r}
-# Los datos están en 
+datos <- read.csv("https://raw.githubusercontent.com/rpizarrog/Probabilidad-y-EstadIstica-VIRTUAL-DISTANCIA/main/datos/nombres%20dades.csv", encoding = "UTF-8", stringsAsFactors = TRUE)
+```
+
+## Observar los datos
+
+```{r}
+kable(datos, caption = "Nombres y edades de personas")
+
 ```
 
 ### La frecuencia de nombre y saber cual nombre tiene mayor y menor frecuencia
 
 ```{r}
-# Pendiente
+tabla <- fdt_cat(datos$nombres)
+tabla
 
 ```
 
 Determinar un gráfico de barra de los nombres
 
 ```{r}
-# Pendiente
+barplot(height = tabla$f, names.arg = tabla$Category)
 
 ```
 
 Determinar las media y mediana de la variable edad
 
 ```{r}
-# Pendiente
+media.edad <- mean(datos$edades)
+mediana.edad <- median(datos$edades)
+
+media.edad ; mediana.edad
 
 ```
 
@@ -69,14 +80,24 @@ Determinar la varianza y desviación de la variable edad
 Determinar una tabla de frecuencia de la variable edad e identificar cual clase tiene mayor frecuencia
 
 ```{r}
-# Pendiente
+var.edad <- var(datos$edades)
+sd.edad <- sd(datos$edades)
+
+var.edad ; sd.edad
 
 ```
 
 Visualizar un histograma de la variable edad
 
 ```{r}
-# Pendiente
+hist(datos$edades)
+
+```
+
+## summary()
+
+```{r}
+summary(datos)
 
 ```
 
