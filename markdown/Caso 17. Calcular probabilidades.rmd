@@ -1,0 +1,182 @@
+---
+title: "Caso 17. Calcular probabilidades"
+author: "Rubén Pizarro Gurrola"
+date: "15/11/2021"
+output: 
+  html_document:
+    code_folding: hide
+    toc: true
+    toc_float: true
+    toc_depth: 6
+---
+
+# Objetivo
+
+Calcular probabilidades
+
+# Descripción
+
+A partir de varios conjuntos de datos calcular probabilidades.
+
+# Desarrollo
+
+## Cargar librerías
+
+Se requiere previa instalalción de estos paquetes. install.packages("dplyr", "gtools", "readr")
+
+La función library significa cargar paquetes a memoria porque se van a utilizar algunas funciones específicas.
+```{r message=FALSE, warning=FALSE}
+library(dplyr)
+library(gtools)
+library(readr)
+```
+
+## Cargar funciones
+
+Se cargan funciones codificadas con anticipación.
+```{r}
+source("https://raw.githubusercontent.com/rpizarrog/Probabilidad-y-EstadIstica-VIRTUAL-DISTANCIA/main/funciones/funcion%20determinar%20frecuencia%20de%20conjuntos.r")
+```
+
+
+## Cargar datos
+
+Los datos contienen nombres de personas y la actividad o deporte  que practican en una Institución educativa.
+
+Puede haber varias actividades que participa una misma persona.
+
+La variable datos es todo el espacio muestral de los alumnos que practican algún deporte.
+
+Se van van a generar varios eventos a partir del todo el espacio muestral.
+
+$$
+datos = S = \text { { x | x es un estudiante que participa en equipos deportivos} }
+$$
+
+```{r}
+datos <- read.csv(file = "https://raw.githubusercontent.com/rpizarrog/Probabilidad-y-EstadIstica-VIRTUAL-DISTANCIA/main/datos/alumnos.deportes.2021.csv", header = TRUE, stringsAsFactors = TRUE, encoding = "ISO-8859")
+datos
+```
+
+## Definie el valor de N
+N significa el total de elementos de el espacio muestral
+```{r}
+N <- nrow(datos)
+N
+```
+
+## Formar conjuntos de eventos
+
+Se deben crear eventos o conjuntos de femeninos, masculinos, futbol, basquetbol, voleybol, atletismo, ajedrez, tenis
+
+### Conjunto de Femenino
+
+```{r}
+femenino <- filter(.data = datos, sexo == 'F')
+femenino
+
+
+```
+
+### Conjunto de Masculino
+
+```{r}
+masculino <- filter(.data = datos, sexo == 'M')
+masculino
+
+
+```
+
+### Conjunto de Futbol
+
+```{r}
+futbol  <- filter(.data = datos, futbol == TRUE)
+futbol
+```
+
+
+### Conjunto de Basquetbol
+
+```{r}
+basquetbol  <- filter(.data = datos, basquetbol == TRUE)
+basquetbol
+```
+
+### Conjunto de Basquetbol
+
+```{r}
+basquetbol  <- filter(.data = datos, basquetbol == TRUE)
+basquetbol
+```
+
+
+### Conjunto de Voleybol
+
+```{r}
+voleybol  <- filter(.data = datos, voleybol == TRUE)
+voleybol
+```
+
+
+### Conjunto de Atletismo
+
+```{r}
+atletismo  <- filter(.data = datos, atletismo == TRUE)
+atletismo
+```
+
+### Conjunto de Ajedrez
+
+```{r}
+ajedrez  <- filter(.data = datos, ajedrez == TRUE)
+ajedrez
+```
+
+```{r}
+tenis  <- filter(.data = datos, tenis == TRUE)
+tenis
+```
+
+### Probabilidades 
+
+El experimento es seleccionar o elegir a una persona aleatoriamente para determinar y/o calcular probabilidades.
+
+#### ¿Cuál es la probabilidad de que se elija a un estudiante del género masculino?
+$$
+P(masculino) = \frac{n}{N}
+$$
+
+```{r}
+n <- nrow(masculino)
+n
+
+```
+
+```{r}
+paste("La probabilidad de que se del género masculino es: ",fdeterminar.frecuencia(n,N))
+```
+
+#### ¿Cuál es la probabilidad de que se elija a un estudiante del género femenino?
+$$
+P(femenino) = \frac{n}{N}
+$$
+
+```{r}
+n <- nrow(femenino)
+n
+
+```
+
+```{r}
+paste("La probabilidad de que se del género femenino es: ",fdeterminar.frecuencia(n,N))
+```
+
+
+
+# Interpretación
+
+Los evento son subconjuntos de todo el espacio muestral, se crearon distintos conjuntos de datos que permiten expresar probabilidades.
+
+Para determina la probabilidad de un evento o de un conjunto se hace determinando la frecuencia relativa y porcentual, divider la cantidad de ocasiones (punto muestrales) que hay de ese conjunto con respecto a el total del espacio meustral $\frac{n}{N}$.
+
+
