@@ -85,6 +85,39 @@ Los eventos E1, E2, E3, E4 y cualquier otro evento siendo subconjuntos de todo e
 
 # Desarrollo
 
+## Función which()
+
+Antes de ver algunos ejemplos se recomienda entender la función *which()* que se utiliza para determinar posiciones de un vector bajo una expresión de comparación. Luego esas posiciones sirven para acceder a los elementos de un vector.
+
+Se presenta un ejercicio para probar la función *which()*.
+
+La función *which()* devuelve la posición o *índice (index) de un elemento dentro de un vector*, ejemplo, se tienen 12 números:
+
+|   1    |  2  |  3  |  4  | **5**  | **6**  |  7  | **8**  |  9  | 10  | 11  | 12  |
+|:------:|:---:|:---:|:---:|:------:|:------:|:---:|:------:|:---:|:---:|:---:|:---:|
+| **30** | 40  | 50  | 60  | **20** | **10** | 40  | **20** | 50  | 40  | 60  | 50  |
+
+Sólo las posiciones 1, 5, 6 y 8 tienen valores por debajo de 40 que equivalen a 30, 20, 10 y 20 respectivamente.
+
+Con la función *which()* se encuentran las posiciones de ese vector y luego haciendo uso de [posiciones] se encuentran los valores que están por debajo de 40.
+
+```{r}
+numeros <- c(30,40,50,60,20,10,40,20,50,40,60,50)
+numeros
+n <- length(numeros)
+
+```
+
+## Posiciones y valores con which()
+
+```{r}
+posiciones <- which(numeros < 40)
+paste("Las posiciones o índices (index)")
+posiciones
+numeros[posiciones]
+
+```
+
 ## Espacios muestrales
 
 Se construye espacios muestrales y alguno eventos respectivos de experimentos de lanzar un dado y de contar alumnos inscritos en una institución de educación superior.
@@ -101,26 +134,6 @@ S
 ```
 
 #### Evento pares
-
-Antes de continuar con los números pares, se presenta un ejercicio para probar la función *which()*.
-
-La función *which()* devuelve la posición o *índice (index) de un elemento dentro de un vector*, ejemplo de *which*(). Ejemplo se tienen 12 números:
-
-|   1    |  2  |  3  |  4  | **5**  | **6**  |  7  | **8**  |  9  | 10  | 11  | 12  |
-|:------:|:---:|:---:|:---:|:------:|:------:|:---:|:------:|:---:|:---:|:---:|:---:|
-| **30** | 40  | 50  | 60  | **20** | **10** | 40  | **20** | 50  | 40  | 60  | 50  |
-
-Sólo las posiciones 1, 5, 6 y 8 tienen valores por debajo de 40 que equivalen a 30, 20, 10 y 20 respectivamente
-
-```{r}
-numeros <- c(30,40,50,60,20,10,40,20,50,40,60,50)
-numeros
-n <- length(numeros)
-posiciones <- which(numeros < 40)
-paste("Las posiciones o índices (index)")
-posiciones
-numeros[posiciones]
-```
 
 Regresando al caso del dado. Con esa misma función *which()* se construyen los eventos para el caso de un solo dado.
 
