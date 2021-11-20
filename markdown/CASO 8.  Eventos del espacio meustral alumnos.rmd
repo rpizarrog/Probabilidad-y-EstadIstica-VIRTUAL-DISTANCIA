@@ -137,6 +137,8 @@ S
 
 Regresando al caso del dado. Con esa misma función *which()* se construyen los eventos para el caso de un solo dado.
 
+El operador *%in%* evalúa si los valores de S están en el vector *c(2,4,5)*. Con la función *paste()* se muestra el mensaje.
+
 ```{r}
 pares <- S[which(S %in% c(2, 4, 6))]
 pares
@@ -181,7 +183,7 @@ paste("Existen ", length(menor.cuatro), " puntos muestrales del total de ", leng
 Crear espacio muestral alumnos
 
 $$
-S = \text{{x | x son alumnos inscritos en una institución educativa de nivel superior}}
+S = alumnos = \text{{x | x son estudiantes inscritos en una institución educativa de nivel superior}}
 $$
 
 #### Cargar la función
