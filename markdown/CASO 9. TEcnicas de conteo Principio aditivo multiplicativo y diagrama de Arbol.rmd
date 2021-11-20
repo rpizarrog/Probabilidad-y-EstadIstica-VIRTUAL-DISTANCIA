@@ -288,7 +288,15 @@ paste("Existen ", n.productos, " opciones de elegir un(a) ", producto, " ",marca
 7.  ¿Cuáles, cuántas opciones y cuál es la probabilidad que existe de elegir unos zapatos de marca Y del género Masculino y del número 28?
 
 ```{r}
-# Similar a la pregunta 7
+producto <- "ZAPATO"
+genero <- "Masculino"
+talla <- "28"
+productos <- subset(S, productos == producto & generos == genero & tallas == talla)
+productos
+
+n.productos <- nrow(productos)
+
+paste("Existen ", n.productos, " opciones de elegir un(a) ", producto, " ", genero, " de entre todo el espacio muestral", ", representan ",  round(n.productos / N,4), " o sea ", round(n.productos / N * 100, 2), "%  del total del espacio muestral")
 
 ```
 
