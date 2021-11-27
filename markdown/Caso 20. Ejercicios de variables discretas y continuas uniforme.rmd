@@ -257,7 +257,7 @@ gacumulada
 
 ##### P(x=2)
 
-¿Cuál es la probabilidad de que le ofrezcan trabajo a dos estudiantes? $P(f(x=2))$.
+¿Cuál es la probabilidad de que le ofrezcan trabajo a dos estudiantes? $P(f(x = 2))$.
 
 ```{r}
 f.prob.discr(datos = tabla, discreta = 2, tipo = 0)
@@ -267,20 +267,119 @@ f.prob.discr(datos = tabla, discreta = 2, tipo = 0)
 
 ##### P(x\>=2)
 
-¿Cuál es la probabilidad de que le ofrezcan trabajo a mas de dos estudiantes? $$
-P(F(x=3)) = P(f=3) + P(f(4))
+¿Cuál es la probabilidad de que le ofrezcan trabajo a dos o mas estudiantes? $$
+P(x \ge 2) = P(2) + P(3) + P(4)
 $$
 
 $$
-1 - F(x = 3)
+P(x \ge 2) = 1 - F(x=1)
 $$
 
 ```{r}
-
+f.prob.discr(datos = tabla, discreta = 2, tipo = 4)
 ```
 
 ## Ejercicios con variables continuas y distribución uniforme
 
+![](images/funcion%20densidad%20distribucion%20uniforme-02.jpg){width="400"}
+
+### Espera de autobús
+
+![](images/autobus%20parada%20de%20autobus.jpg){width="400"}
+
+Un autobús para por cierta parada cada 15 minutos. ¿Cuál es la probabilidad de que una persona que llega en un momento dado tenga que esperar el autobús mas de cinco minutos?
+
+$P(x > 5$)
+
+![](images/solucion%20continua%20dist.%20uniforme%20autobus%20parada%20de%20camion-02.jpg){width="400"}
+
+```{r}
+a <- 0
+b <- 15
+altura <- 1 / (b -a)
+altura
+
+base <- 10
+
+area <- base * altura
+area
+
+paste("La probabilida de esperar mas de 5 minutos es de ", round(area * 100, 2))
+
+
+```
+
+Calcular la probabilidad por medio de la función **punif()**
+
+$$
+P(x>5)
+$$
+
+```{r}
+x = 5
+prob1 <- punif(q = x, min = 0, max = 15)
+prob1
+
+
+prob2 <- 1  - punif(q = x, min = 0, max = 15)
+prob2
+
+prob3 <- punif(q = x, min = 0, max = 15, lower.tail = FALSE)
+prob3
+
+paste("La probabilida de esperar mas de 5 minutos es de ", round(prob3 * 100, 2))
+
+
+```
+
+$P(x < 2$)
+
+¿Cuál es la probabilidad de que una persona espere un tiempo menor que 2 minutos?
+
+![](images/solucion%20continua%20dist.%20uniforme%20autobus%20parada%20de%20camion%20menor%20igual%20a%202.jpg){width="400"}
+
+```{r}
+a <- 0
+b <- 15
+altura <- 1 / (b -a)
+altura
+
+base <- 2
+
+area <- base * altura
+area
+
+paste("La probabilida de esperar mas de 5 minutos es de ", round(area * 100, 2))
+
+```
+
+Calcular la probabilidad por medio de la función **punif()**
+
+$$
+P(x<=2)
+$$
+
+```{r}
+x = 2
+prob1 <- punif(q = x, min = 0, max = 15)
+prob1
+
+
+prob2 <- 1  - punif(q = x, min = 0, max = 15)
+prob2
+
+prob3 <- punif(q = x, min = 0, max = 15, lower.tail = FALSE)
+prob3
+
+paste("La probabilida de esperar mas de 5 minutos es de ", round(prob1 * 100, 2))
+
+
+```
+
+
+
 # Interpretación
+
+Pendiente ...
 
 # Bibliografía
