@@ -1,0 +1,166 @@
+---
+title: "Caso 20. Ejercicios de variables aleatorias discretas y continuas con distribución uniforme"
+author: "Rubén Pizarro Gurrola"
+date: "26/11/2021"
+output: html_document
+---
+
+# Objetivo
+
+Calcular probabilidades con variables aleatorias discretas y con variables aleatorias continuas con distribución uniforme
+
+# Desarrollo
+
+## Cargar librerías
+
+```{r message=FALSE, warning=FALSE}
+library(ggplot2)
+library(dplyr)
+library(gtools)
+library(knitr)
+library(cowplot) # Gráficas mismo renglones
+
+options(scipen = 999) # Notación normal
+```
+
+## Ejercicios con variables discretas
+
+### Tirar dos dados
+
+![](images/dos%20dados-01.jfif)
+
+#### Construir tabla de distribución
+
+```{r}
+dado <- c(1,2,3,4,5,6)
+
+lanzar_dados <- data.frame(permutations(n=6, r = 2, v = dado, repeats.allowed = TRUE))
+
+names(lanzar_dados) <- c("dado1", "dado2")
+
+lanzar_dados <- cbind(lanzar_dados, suma = apply(X = lanzar_dados, MARGIN = 1, FUN = sum))
+
+lanzar_dados
+
+```
+
+#### Contar frecuencias de las sumas
+
+```{r}
+tabla <- lanzar_dados %>%
+  group_by(suma) %>%
+  summarise(frec = n()) 
+
+tabla <-  data.frame(tabla)
+
+```
+
+#### Tabla con nombres de x's
+
+```{r}
+colnames(tabla) <- c('x', 'casos')
+tabla
+```
+
+#### Tabla con probabilidades
+
+```{r}
+n <- sum(tabla$casos)
+tabla <- tabla %>%
+  mutate(f.prob = round(casos / n, 4))
+
+
+tabla <- tabla %>%
+  mutate(f.acum = cumsum(f.prob))
+
+
+tabla
+```
+
+#### Visualizar Frecuencia de la suma de los dos dados
+
+```{r}
+gfrecuencias <- ggplot(data = tabla) +
+  geom_col(aes(x = x, y = f.prob), fill= 'lightblue') 
+
+gfrecuencias
+```
+
+#### Visualizar el acumulado de la suma de los dos dados
+
+### Calcular probabilidades
+
+```{r}
+gacumulada <- ggplot(data = tabla) +
+  geom_line(aes(x = x, y = f.acum), col='blue') +
+  geom_point(aes(x = x, y = f.acum), col='red')
+
+gacumulada
+```
+
+#### Función para calcular probabilidades
+
+```{r}
+f.prob.discr <- function(datos, discreta) {
+  filter(datos, x == discreta) %>%
+    select (f.prob)
+}
+
+f.prob.discr.acum.M<- function(datos, discreta) {
+  filter(datos, x == discreta - 1) %>%
+    select (f.acum)
+  
+}
+
+f.prob.discr.acum.m<- function(datos, discreta) {
+  filter(datos, x == discreta ) %>%
+    select (f.acum)
+  
+}
+```
+
+#### P(x = 3)
+
+$P(f(x=3))$
+
+La probabilidad cuando x sea igual a 3
+
+```{r}
+f.prob.discr(datos = tabla, discreta = 3)
+```
+
+#### P(x = 7)
+
+$P(f(x=7))$
+
+La probabilidad cuando x sea igual a 7
+
+```{r}
+f.prob.discr(datos = tabla, discreta = 7)
+```
+
+#### P(x \>= 7)
+
+$P(F(x \ge7))$
+
+La probabilidad cuando x sea mayor o igual a 7 $1 - P(F(X=6)) = P(7) + P(8) + P(9) + P(10) + P(11) + P(12)$
+
+```{r}
+1 - f.prob.discr.acum.M(datos = tabla, discreta = 7)
+```
+
+#### P(x \<= 5)
+
+$P(F(x \le 5))$
+
+La probabilidad cuando x sea menor o igual a 5
+
+$P(F(X\le5)) = P(2) + P(3) + P(4) + P(5)$
+
+```{r}
+f.prob.discr.acum.m(datos = tabla, discreta = 5)
+```
+
+## Ejercicios con variables continuas y distribución uniforme
+
+# Interpretación
