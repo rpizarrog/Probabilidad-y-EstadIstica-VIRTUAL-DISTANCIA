@@ -108,10 +108,10 @@ f.varianza.hiper <- function(VE, n, r, N)  {
   varianza
 }
 
-# Devuelve la densidad de la distribución T Student
-f.t.student <- function(media.muestra, media.pob, desv.muestra, n) {
-  dens <- (media.muestra - media.pob) / (desv.muestra / sqrt(n))
-  dens
+# Devuelve el valor de t para una distribución T Student
+f.devolver.t <- function(media.muestra, media.pob, desv.muestra, n) {
+  t <- (media.muestra - media.pob) / (desv.muestra / sqrt(n))
+  t
 }
 
 f.t.student.std <- function(Z, V) {
