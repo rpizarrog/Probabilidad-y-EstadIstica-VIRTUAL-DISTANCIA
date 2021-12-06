@@ -1,0 +1,350 @@
+---
+title: "Caso 27. Distribuciones de probabilidad varios"
+author: "Rubén Pizarro Gurrola"
+date: "4/12/2021"
+output: 
+  html_document:
+    code_folding: hide
+    toc: true
+    toc_float: true
+    toc_depth: 6
+bibliography: references.bib
+---
+
+# Objetivo
+
+Calcular densidad y probabilidades de cualquier distribuciones Binomial, Poisson Hipergeométrica Normal, Normal Estándar y T Student
+
+# Descripción
+
+Calcular densidad y probabilidades de las distribuciones con variables continuas continuas Binomial, Poisson Hipergeométrica con variables discretas y Normal, Normal Estándar, T Student con variables continuas continuas
+
+# Desarrollo
+
+## Cargar librerías
+
+```{r message=FALSE, warning=FALSE}
+library(ggplot2)
+library(mosaic)
+library(visualize)
+```
+
+## Binomial
+
+¿Cuál es el valor de x = 5, cuando la probabilidad de éxito es de 60% de una distribución binomial que tiene 10 observaciones?
+
+```{r}
+dens <- dbinom(x = 5, size = 10, prob = 0.60)
+dens
+
+plotDist('binom', params=list( 10, .60))
+
+```
+
+¿Cuál es el valor de x = 7, cuando la probabilidad de éxito es de 60% de una distribución binomial que tiene 10 observaciones?
+
+```{r}
+dens <- dbinom(x = 7, size = 10, prob = 0.60)
+dens
+
+plotDist('binom', params=list( 10, .60))
+
+```
+
+¿Cuál es el valor de x = 6, cuando la probabilidad de éxito es de 40% de una distribución binomial que tiene 12 observaciones?
+
+```{r}
+dens <- dbinom(x = 6, size = 12, prob = 0.40)
+dens
+
+plotDist('binom', params=list( 12, .40))
+
+
+```
+
+![](images/tiro%20con%20arco.png){width="400"}
+
+La probabilidad de que una persona de en el blanco con un arco es del 0.25% (éxito).
+
+¿Cuál es la probabilidad de que haciendo 10 intentos le atine al tercer intento x = 3
+
+```{r}
+dens <- dbinom(x=3, size = 10, prob = 0.25)
+dens
+
+plotDist('binom', kind = "cdf", params=list( 10, .25))
+```
+
+¿Cuál es la probabilidad de que haciendo 10 intentos le atine cuando mucho a tres o le atine máximo en tres ocasiones? $x \le 3$
+
+```{r}
+prob <- pbinom(q = 3, size = 10, prob = 0.25)
+prob
+
+plotDist('binom', kind = "cdf", params=list( 10, .25))
+```
+
+¿Cuál es la probabilidad de que haciendo 10 intentos le atine cuando menos a 4 ocasiones? $x \ge 4$
+
+```{r}
+prob <- pbinom(q = 4, size = 10, prob = 0.25, lower.tail = FALSE)
+prob
+
+plotDist('binom', params=list( 10, .25))
+```
+
+## Poisson
+
+¿Cuál es el valor de la densidad de x=2 en una distribución de Poisson cuando la media es igual a 4?
+
+```{r}
+dens <- dpois(x = 2, lambda = 4)
+dens
+
+plotDist(dist = "pois", kind = "density", params=list(4))
+```
+
+¿Cuál es el valor de la densidad de x=5 en una distribución de Poisson cuando la media es igual a 4?
+
+```{r}
+dens <- dpois(x = 5, lambda = 4)
+dens
+
+plotDist(dist = "pois", kind = "density", params=list(4))
+```
+
+¿Cuál es el valor de la probabilidad acumulada $x \le5$ en una distribución de Poisson cuando la media (lambda $\lambda$) es igual a 4?
+
+```{r}
+prob <- ppois(q = 5, lambda = 4)
+prob
+
+plotDist(dist = "pois", kind = "cdf", params=list(4))
+```
+
+¿Cuál es el valor de la probabilidad acumulada $x \le7$ en una distribución de Poisson cuando la media (lambda $\lambda$) es igual a 4?
+
+```{r}
+prob <- ppois(q = 7, lambda = 4)
+prob
+
+plotDist(dist = "pois", kind = "cdf", params=list(4))
+```
+
+![](images/cheques-sin-fondos.jpg){width="400"}
+
+Si un banco recibe en promedio 6 cheques sin fondo por día, ¿cuáles son las probabilidades de que reciba,
+
+-   cuatro cheques sin fondo en un día dado, $P(x=4)$
+
+```{r}
+media <- 6
+dpois(x = 4, lambda = media)
+
+plotDist(dist = "pois", kind = "density", params = media)
+```
+
+-   10 cheques o menos sin fondos en un dia? $P(x\le10)$
+
+```{r}
+media <- 6
+ppois(q = 10, lambda = media)
+
+plotDist(dist = "pois", kind = "cdf", params = media)
+
+```
+
+-   mas de siete cheques sin fondos en un dia? $P(x\ge7)$
+
+```{r}
+media <- 6
+ppois(q = 7, lambda = media, lower.tail = FALSE)
+
+plotDist(dist = "pois", kind = "cdf", params = media)
+```
+
+## Hipergeométrica
+
+![](images/refrigeradores%20descompuestos.jfif){width="400"}
+
+Diez refrigeradores de cierto tipo han sido devueltos a un distribuidor debido al a presencia de un ruido oscilante agudo cuando el refrigerador está funcionando.
+
+Supongamos que 4 de estos 10 refrigeradores tienen compresores defectuosos y los otros 6 tienen problemas más leves.
+
+Si se examinan al azar 5 de estos 10 refrigeradores, y se define la variable aleatoria X: "el número entre los 5 examinados que tienen un compresor defectuoso".
+
+La variable aleatoria es $x={0,1,2,3....  \text{compresor defectuoso}}$
+
+```{r}
+N <- 10  # Total de refrigeradores
+k <-5    # Los que se extraen
+m <- 4   # Los que posiblemente están con problema de compresor
+n <- N - m # Los que no tienen problemas
+
+
+
+```
+
+¿Cuál es la probabilidad de que más de uno incluyendo el uno tenga fallas de compresor? $P(x\ge0)$
+
+```{r}
+
+phyper(q = 0, m = m, n = n, k = k, lower.tail = FALSE)
+
+
+plotDist(dist = "hyper", kind = "density", params = list(m = m, n= n, k=k))
+```
+
+La probabilidad de que a lo mas 1 tenga fallas de compresor $P(x\le1)$
+
+```{r}
+phyper(q = 1, m = m, n = n, k = k)
+
+
+plotDist(dist = "hyper", kind = "cdf", params = list(m = m, n= n, k=k))
+```
+
+## Normal
+
+![](images/pesos%20personas.jpg){width="400"}
+
+La media de los pesos de $500$ estudiantes de un colegio es $70kgs$ y la desviación típica $3kgs$. Los datos se distribuyen normalmente.
+
+¿Cuál es la probabilidad de encontrar estudiantes que pesen entre 65 y 75 $P(65\le x\le75)$
+
+```{r}
+media <- 70
+desv <- 3
+pnorm(q = 75, mean = media, sd = desv) - pnorm(q = 65, mean = media, sd = desv)
+
+plotDist(dist = "norm", mean=media, sd= desv, groups = x >=65 & x<=75, type = "h")
+  
+
+```
+
+¿Cuál es la probabilidad de encontrar estudiantes que pesen mas de 75 kgs $P(x\ge75)$
+
+```{r}
+pnorm(q = 75, mean = media, sd = desv, lower.tail = FALSE)
+
+plotDist(dist = "norm", mean=media, sd= desv, groups = x >=75, type = "h")
+
+```
+
+¿Cuál es la probabilidad de encontrar estudiantes que pesen menos o igual a 65 $P(x\le65)$
+
+```{r}
+pnorm(q = 65, mean = media, sd = desv)
+
+plotDist(dist = "norm", mean=media, sd= desv, groups = x<=65, type = "h")
+```
+
+## Normal Estándar Z
+
+Del ejercicio anterior de una distribución normal con media igual a 70 y desviación igual a 3 $\mu=0; \sigma = 3$, convertir o transformar los valores de $x={60, 61, 62...78, 79,80}$ a valores en $z$ y determianar probabilidades
+
+```{r}
+media <- 70
+desv <- 3
+# xs <- 60:80
+xs <- seq(from = 60, to=80, by = 5)
+#xs
+
+zs <- (xs - media) / desv 
+#zs
+tabla <- data.frame(xs, zs) 
+tabla
+```
+
+¿Cuál es la probabilidad de encontrar personas entre 65 y 75 convertidos a valores en z?
+
+```{r}
+x1 = 65; x2 = 75
+z1 = (x1 - media) / desv; 
+z2 = (x2 - media) / desv;
+
+pnorm(q = z2) - pnorm(q = z1)
+
+plotDist(dist = "norm", groups = x >=z1 & x<=z2, type = "h")
+
+```
+
+¿Cuál es la probabilidad de encontrar estudiantes que pesen mas de 75 kgs $P(x\ge75)$ valores en z
+
+```{r}
+x <- 75
+z <- (x - media) / desv; 
+
+pnorm(q = z, lower.tail = FALSE)
+
+plotDist(dist = "norm", groups = x >=z , type = "h")
+```
+
+¿Cuál es la probabilidad de encontrar estudiantes que pesen menos o igual a 65 $P(x\le65)$ convertidos a z
+
+```{r}
+
+x <- 65
+z <- (x - media) / desv; 
+
+pnorm(q = z)
+
+plotDist(dist = "norm", groups = x >=z , type = "h")
+```
+
+## T Student
+
+Cuál es el intervalo de confianza y el valor estimado de una media poblacional que esté dentro de ese intervalo a un $90$% de confianza con 10 grados de libertad, de una muestra **t Student** con media = 5, y desviación = 1.5. $gd=10; \bar{x}=5, S=1.5$
+
+### Los datos
+
+```{r}
+media.m <- 5
+desv.m <- 1.5
+n <- 11
+confianza <- 0.90
+
+
+
+```
+
+### Tabla con los datos
+```{r}
+tabla <- data.frame(variables = c("n", "Grados libertad", "Media muestra", "Desv.Std muestra", "Media Pob.", "Confianza"), datos = c(n, (n-1), media.m, desv.m, NA, confianza)) 
+tabla
+```
+
+
+### Valor de t
+```{r}
+t <- qt(p = (1 - confianza) / 2, df = n-1) # dos colas
+t <- abs(t)
+t
+```
+
+### Intervalo de confianza
+
+```{r}
+li <- media.m - t * (desv.m /sqrt(n) )
+ls <- media.m + t * (desv.m /sqrt(n) )
+
+print("intervalo")
+intervalo <- c(li, ls)
+intervalo
+```
+
+El intervalo de confianza con valores entre `r intervalo[1]` y
+`r intervalo[2]` con un 90% de confianza se interpreta que la media de
+la población debe estar en ese intervalo.
+
+### Visualizar gráfica Gauss
+
+```{r}
+
+visualize.t(stat = c(-t, t), df = n-1, section = "tails") +
+  text(0, 0.2, paste(confianza*100, "%"), col = "red") 
+
+```
+## Interpretación
+
+# Bibliografía
