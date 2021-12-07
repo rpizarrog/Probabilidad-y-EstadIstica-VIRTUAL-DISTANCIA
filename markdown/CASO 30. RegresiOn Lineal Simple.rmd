@@ -220,8 +220,8 @@ paste("El coeficiente de determinación o Multiple R-squared: es igual al cuadra
 ```
 
 -   El coeficiente de determinación $r^{2}$ con valor de
-    `r round(r^2,4)` significa que el valor de solido representa el
-    `r round(r^2* 100, 2)` % del oxígeno.
+    `r round(r^2,4)` significa que el valor de llamadas representa el
+    `r round(r^2* 100, 2)` % de las ventas.
 
 ### Determinar los valores de a y b
 
@@ -231,13 +231,22 @@ b <- modelo$coefficients[2]
 a ; b
 ```
 
+### Medias de las variables
+
+```{r}
+mean(datos$llamadas)
+
+mean(datos$ventas)
+```
+
 ### Gráfica de tendencia
 
 ```{r}
 ggplot() + 
   geom_point(data = datos, aes(x = llamadas, y = ventas), colour='blue') +
+  geom_point(aes(x= mean(datos$llamadas), y = mean(datos$ventas)), col = 'green') +
   geom_line(aes( x = datos$llamadas, y = predict(modelo, datos)), color = "red") +
-  xlab("Comerciales") + 
+  xlab("Llamadas") + 
   ylab("Ventas") + 
   ggtitle("Linea de tendencia sobre Conjunto de Datos")
 ```
@@ -331,8 +340,8 @@ paste("El coeficiente de determinación o Multiple R-squared: es igual al cuadra
 ```
 
 -   El coeficiente de determinación $r^{2}$ con valor de
-    `r round(r^2,4)` significa que el valor de solido representa el
-    `r round(r^2* 100, 2)` % del oxígeno.
+    `r round(r^2,4)` significa que el valor de comerciales representa el
+    `r round(r^2* 100, 2)` % de las ventas.
 
 ### Determinar los valores de a y b
 
@@ -342,11 +351,20 @@ b <- modelo$coefficients[2]
 a ; b
 ```
 
+### Medias de las variables
+
+```{r}
+mean(datos$comerciales)
+
+mean(datos$ventas)
+```
+
 ### Gráfica de tendencia
 
 ```{r}
 ggplot() + 
   geom_point(data = datos, aes(x = comerciales, y = ventas), colour='blue') +
+  geom_point(aes(x= mean(datos$comerciales), y = mean(datos$ventas)), col = 'green') +
   geom_line(aes( x = datos$comerciales, y = predict(modelo, datos)), color = "red") +
   xlab("Comerciales") + 
   ylab("Ventas") + 
@@ -461,11 +479,20 @@ b <- modelo$coefficients[2]
 a ; b
 ```
 
+### Medias de las variables
+
+```{r}
+mean(datos$solido)
+
+mean(datos$oxigeno)
+```
+
 ### Gráfica de tendencia
 
 ```{r}
 ggplot() + 
   geom_point(data = datos, aes(x = solido, y = oxigeno), colour='blue') +
+  geom_point(aes(x= mean(datos$solido), y = mean(datos$oxigeno)), col = 'green') +
   geom_line(aes( x = datos$solido, y = predict(modelo, datos)), color = "red") +
   xlab("Reducción de sólido") + 
   ylab("% Oxígeno") + 
@@ -501,7 +528,7 @@ Pendiente..
 Mediciones del cuerpo humano en donde se buscar identificar el
 coeficiente de correlación $r$, el coeficiente de determinación $r^2$ y
 el modelo de regresión lineal para predecir peso en relación a la
-estarura de una persona.
+estatura de una persona.
 
 ### Cargar los datos
 
@@ -602,11 +629,20 @@ b <- modelo$coefficients[2]
 a ; b
 ```
 
+### Medias de las variables
+
+```{r}
+mean(datos$estatura)
+
+mean(datos$peso)
+```
+
 ### Gráfica de tendencia
 
 ```{r}
 ggplot() + 
   geom_point(data = datos, aes(x = estatura, y = peso), colour='blue') +
+  geom_point(aes(x= mean(datos$estatura), y = mean(datos$peso)), col = 'green') +
   geom_line(aes( x = datos$estatura, y = predict(modelo, datos)), color = "red") +
   xlab("Estatura") + 
   ylab("Peso") + 
