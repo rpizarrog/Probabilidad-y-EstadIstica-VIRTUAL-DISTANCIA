@@ -117,14 +117,15 @@ En donde:
 
 ##### Fórmulas par obtener coeficientes a y b en el método de mínimos cuadrados
 
-$$b = r \cdot(\frac{\sigma_y}{\sigma_x}) = \frac{\sum(x_i - \bar{x})\cdot(y_i - \bar{y})}{\sum(x_i-\bar{x})^2}$$
+$$b = r \cdot(\frac{
+s_{y}}{s_x}) = \frac{\sum(x_i - \bar{x})\cdot(y_i - \bar{y})}{\sum(x_i-\bar{x})^2}$$
 En donde:
 
 -   r es el coeficiente de correlación.
 
--   $\sigma_y$ es la desviación estándar de la variable 'y'.
+-   $S_y$ es la desviación estándar de $y$.
 
--   $\sigma_x$ es la desviación estándar de la variable 'x'.
+-   $S_x$ es la desviación etándar de la variable $x$.
 
 Y para determinar a:
 
@@ -268,7 +269,6 @@ y
 -   Se comprobó las predicciones
 -   Por ejemplo para un valor de 4 en comerciales la predicción de
     ventas es de 55.99.
-
 
 ## Ejercicio ventas en función de comerciales
 
