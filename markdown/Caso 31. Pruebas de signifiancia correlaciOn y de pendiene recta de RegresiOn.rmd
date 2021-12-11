@@ -1,0 +1,622 @@
+---
+title: "Caso 31. Prueba de significancia de correlación y prueba significancia de pendiente"
+author: "Rubén Pizarro Gurrola"
+date: "8/12/2021"
+output: 
+  html_document: 
+    toc: yes
+    toc_depth: 5
+    code_folding: hide
+    toc_float: yes
+    number_sections: yes
+bibliography: references.bib
+editor_options: 
+  markdown: 
+    wrap: 72
+---
+
+# Objetivo
+
+Realizar pruebas de significancia del coeficiente de correlación y el
+coeficiente la pendiente en modelos de regresión lineal simple.
+
+# Descripción
+
+Se construyen unos datos relacionados con el caso anterior de llamadas y
+ventas.
+
+Se determina el coeficiente de correlación de Pearson $r$
+
+Se determina el valor del coeficiente de determinación $r^2$
+
+Se hace la prueba de significancia para determinar si la correlación
+estimada de una población es diferente de cero para rechazar o aceptar
+una hipótesis nula.
+
+Se construye el modelo de regresión linea con la ecuación de mínimos
+cuadrados $Y = a + bx$
+
+Se determinan los coeficiente $a$ y $b$
+
+Se hace una prueba de significancia para evaluar si el valor de la
+pendiente o valor de $b$ tiene un significado estadístico de manera tal
+que se pueda rechazar una hipótesis nula.
+
+# Fundamento teórico
+
+Como los datos provienen de una muestra es necesario contemplar pruebas
+de significancia para estimar parámetros poblacionales con los que se
+pueda confiar que las estadísticos son significativos.
+
+Las pruebas de significancia implica determinar un valor de $t$ que van
+a ser comparados con valores críticos a partir de los cuantiles **qt()**
+de distribuciones **t student** a ciertos grados de libertar y con el
+nivel de confianza requerido.
+
+De tal forma que se debe utilizar e interpretar en caso de que el valor
+de $t$ esté en una zona de confianza se acepta una hipótesis nula y si
+está fuera se rechaza la hipótesis nula y se acepta hipótesis
+alternativa.
+
+![](images/rechazo%20aceptacion%20ho%20h1.jpg)
+
+Hay dos pruebas que se describen en este caso:
+
+-   Prueba de significancia para correlación $r$ para saber si la
+    correlación sería difenrete de cero en una población.
+
+-   Prueba de significancia para la pendiente $b$ para saber si
+    estadísticamente el valor de la pendiente de la recta de estimación
+    en una regresión lineal simple es aceptada con valores de una
+    población.
+
+    # Desarrollo
+
+## Cargar librerías
+
+```{r message=FALSE, warning=FALSE}
+library(dplyr)
+library(mosaic)
+library(readr)
+library(ggplot2)  # Para gráficos
+library(knitr)    # Para formateo de 
+library(PerformanceAnalytics) # Para coorelaciones gráficas
+library(visualize)
+```
+
+## Caso Llamadas y ventas
+
+![](images/llamadas%20y%20ventas-02.jfif)
+
+### Crear los datos
+
+Datos de llamadas que hacen vendedores y las ventas que realizan.
+
+```{r}
+vendedores <- paste("V",1:15, sep="")
+llamadas <- c(96, 40, 104, 128, 164, 76, 72, 80 , 36, 84, 180, 132, 120, 44, 84) 
+ventas <- c(41, 41, 51, 60, 61, 29, 39, 50, 28, 43, 70, 56, 45, 31, 30)
+
+datos <- data.frame(vendedores, llamadas, ventas)
+datos
+```
+
+### Determinar correlación de Pearson
+
+$$
+r = \frac{S_{xy}}{S_x \cdot S_y}
+$$
+
+```{r}
+chart.Correlation(datos[,2:3], histogram = TRUE)
+
+r <- cor(x = datos$llamadas, y = datos$ventas)
+r
+
+```
+
+### Determinar correlación de Determinación
+
+Significa elevar al cuadrado el coeficiente de correlación e interpretar
+que tanto afecta o representa la variable llamadas a la variable ventas.
+
+$$
+\text{coeficiente de determinación} = r^2
+$$
+
+```{r}
+c.determinacion <- r^2
+c.determinacion
+
+	
+```
+
+### Prueba de significancia del valor de la correlación
+
+#### Establecer hipótesis
+
+Se establecen hipótesis nula y alternativa con respecto al coeficiente
+de correlación.
+
+La hipótesis nula $H_0$ establece que el coeficiente de correlación en
+una población de donde proviene la muestra sería cero.
+
+La hipótesis alternativa $H_1$ establece que el coeficiente de
+correlación en una población de donde proviene la muestra sería
+diferente de cero.
+
+La idea es demostrar y rechazar la $H_0$
+
+$$
+\text{Hipótesis nula}: H_0: Correlación = 0 \\
+\text{Hipótesis alternativa}: H_1: Correlación \neq 0
+$$
+
+#### Determinar un valor de t
+
+Utilizar funciones de la distribución *t student* para encontrar valores
+críticos de $t$ a un valor de confianza que puede ser
+$0.90, 0.95, 0.99$.
+
+Luego recordar que si se va a evaluar diferente de cero entonce el valor
+de alfa es: $\alpha = (1 - confianza) / 2$. A esto se le llama prueba de
+dos colas.
+
+Se va a utilizar la función *qt()* para estimar los valores de
+*t.critico.*
+
+Se debe calcular el valor de t con respecto a la correlación $r$ de la
+siguiente manera:
+
+$$
+t = r \cdot \frac{\sqrt{n-2}}{\sqrt{1 - r^2}}
+$$
+
+$$
+r el valor de la correlación 
+(n-2) grados de libertad
+$$
+
+#### Calcular el valor de t
+
+A partir de la fórmula
+
+```{r}
+n <- nrow(datos)
+t <-   r * (sqrt(n-2) / sqrt(1 - r^2))
+t
+```
+
+#### Determinar el valor crítico de t
+
+Se toma un nivel de confianza al $95\%$ usando la función de *qt()*
+
+```{r}
+confianza = 0.95
+t.critico <- qt(p = (1 - confianza) / 2, df = n-2, lower.tail = FALSE)
+t.critico
+```
+
+#### Gráfica de densidad t student
+
+Con la gráfica se ubica el valor de $t$ con respecto al valor de
+$t.critico$ y se estima si está en una zona de aceptación rechazo para
+concluir que se acepta o se rechaza la $H_0$.
+
+```{r}
+visualize.t(stat = c(-t.critico, t.critico), section = "tails", df = (n-2)) +
+  abline(v = t, col = "red", lwd = 3, lty = 2) +
+  text(0, 0.2, paste(confianza * 100, "%", sep = ""), col = "red") +
+  xlim(-6,6)
+
+```
+
+#### Rechazo de $H_0$ para prueba de significancia de la correlación
+
+El valor de $t = 6.205089$ está muy a la derecha del valor crítico (no
+se visualiza por la escala) de $t = 2.160369$ de tal forma que se
+entiende o interpreta que está en zona de rechazo.
+
+Al estar en zona de rechazo (azul) se rechaza la $H_0$ y se acepta $H_1$
+
+Entonces con esto se asegura y se prueba que el valor del coeficiente de
+correlación que se obtuvo de la muestra sería absolutamente diferente de
+cero en una población con un nivel de confianza del `r confianza * 100`%
+.
+
+### Prueba de significancia del valor de la pendiente
+
+Para evaluar es valor de una pendiente se tiene que construir un modelo
+de regresión lineal, en este caso sería bajo el modelo de la ecuación de
+mínimos cuadrados $Y = a+bx$ , de la regresión lineal simple.
+
+Con el modelo se determina el valor del coeficiente de l abcisa $a$ y el
+valor de la pendiente $b$ en la fórmula.
+
+La prueba de significancia del valor de la pendiente $b$
+
+Se interpreta de que si este valor de la ecuación obtenido de una
+muestra tiene significado estadístico en una población y se pudiera
+utilizar en la fórmula para estimaciones.
+
+Ahora bien, es necesario obtener el valor de t con la siguiente fórmula:
+
+$$
+t = \frac{b-0}{S_b} \therefore 
+$$
+
+$$
+S_b = \frac{\sqrt{\frac{(y_i - Y)^2}{(n-2)}}}{\sqrt{(x_i-\bar{x})^2}}
+$$
+
+$$
+S_b \text{ es el error estándar de la estimación de la pendiente o varianza de residuos} \\
+b \text{ es el valor de la pendiene}
+$$
+
+#### Modelo de regresión lineal simple
+
+Se construye el modelo
+
+```{r}
+modelo <- lm(data = datos, formula = ventas ~ llamadas)
+modelo
+resumen <- summary(modelo)
+
+```
+
+##### Dispersión y recta de regresión
+
+```{r}
+ggplot() + 
+  geom_point(data = datos, aes(x = llamadas, y = ventas), colour='blue') +
+  geom_point(aes(x= mean(datos$llamadas), y = mean(datos$ventas)), col = 'green') +
+  geom_line(aes( x = datos$llamadas, y = predict(modelo, datos)), color = "red") +
+  xlab("Llamadas") + 
+  ylab("Ventas") + 
+  ggtitle("Linea de tendencia sobre Conjunto de Datos")
+
+```
+
+##### Coeficiente a y b de la ecuación $Y = a + bx$
+
+```{r}
+a <- modelo$coefficients[1]
+b <- modelo$coefficients[2]
+
+```
+
+#### Cálculos manuales de $S_b$
+
+Se presentan una tabla con las columnas con los cálculos necesarios para
+determinar $S_b$ a partir de los valores $x$ e $y$.
+
+```{r}
+tabla <- data.frame(x = llamadas, y = ventas, x.media = round(mean(llamadas),4), xi.menos.x.media = llamadas - mean(llamadas), xi.menos.x.media.cuad = round((llamadas - mean(llamadas))^2,4), Y = modelo$fitted.values, y.menos.Y = round(ventas - modelo$fitted.values, 4), y.menos.Y.cuad = round((ventas - modelo$fitted.values)^2, 4))
+
+tabla <- rbind(tabla, apply(tabla, 2, sum))
+
+tabla[16,c(1,2,3,6,7)] <- '*'
+
+kable(tabla)
+
+```
+
+De la tabla anterior se obtienen las sumatorias de $(x_i - \bar{x})$ y
+de $(y_i - Y)^2$. Las sumatorias de las columnas 5 y 8 de la tabla
+anterior renglón 16. *[16, (5,8)]*
+
+```{r}
+suma.xi.media.x.cuad <- tabla[16, 5]
+suma.yi.menos.Y.cuad <- tabla[16, 8]
+
+suma.xi.media.x.cuad
+suma.yi.menos.Y.cuad
+
+
+```
+
+##### Determinar Sb
+
+Ahora sólo calcular conforme a la fórmula el valor de $S_b$ y sería
+
+```{r}
+n <- nrow(datos)
+Sb <- sqrt(suma.yi.menos.Y.cuad / (n-2)) / sqrt(suma.xi.media.x.cuad)
+Sb
+
+```
+
+##### Calcular t
+
+Y calculando el valor de $t$ conforme a la fórmula sería:
+
+```{r}
+t <- (b - 0) / Sb
+t
+
+```
+
+#### Identificación del los valore Sd y t en modelo
+
+```{r}
+resumen
+
+
+```
+
+Los valores específicos incluyendo el valor de $p$ que es la
+probabilidad de las regiones en color azul más adelante visto en la
+gráfica.
+
+Los asteriscos **'\*\*\*'** significan que los coeficientes son
+estadísticamente significativos a niveles de confianza 0.001, 0.01 o
+0.05 y que si son útiles como predictores en la ecuación.
+
+```{r}
+resumen$coefficients[2, ]
+
+```
+
+### Valor de t.critico con *t student*
+
+Nivel de confianza del 95% con valor de t a una cola
+
+$$
+H_0: b \le 0 \\
+H_1: b > 0
+$$
+
+```{r}
+confianza = 0.95
+t.critico <- abs(qt(p = 1 - confianza, df = n-2))
+t.critico
+```
+
+```{r}
+visualize.t(stat = c(t.critico),  df = (n-2)) +
+  abline(v = t, col = "red", lwd = 3, lty = 2) +
+  text(0, 0.2, paste(confianza * 100, "%", sep = ""), col = "red") +
+  xlim(-6,6)
+
+```
+
+Nivel de confianza del 95% con valor de t a dos colas
+
+$$
+H_0: b = 0 \\
+H_1: b \neq 0
+$$
+
+```{r}
+confianza = 0.95
+t.critico <- abs(qt(p = (1 - confianza) /2 , df = n-2))
+t.critico
+```
+
+```{r}
+visualize.t(stat = c(-t.critico, t.critico), section = "tails", df = (n-2)) +
+  abline(v = t, col = "red", lwd = 3, lty = 2) +
+  text(0, 0.2, paste(confianza * 100, "%", sep = ""), col = "red") +
+  xlim(-6,6)
+
+```
+
+El valor de t está muy lejos a la derecha de los valores críticos.
+
+Con estos valores de t comparados con cualquier valor de t.critico se
+interpreta que estos datos de la muestra a un 95% de nivel de confianza
+se debe rechazar la $H_0$ y aceptar la $H_1$ con lo cual se concluye que
+el valor de la pendiente si es un predictor significativo para la
+ecuación.
+
+## Caso datos x e y aleatorio
+
+En este ejercicio se generan datos aleatorios de una muestra de una
+población x. Se desconoce el valor de la correlación y se determinan las
+pruebas de significancia de correlación y prueba de significancia de la
+pendiente en la ecuacuón de regresión lineal simple.
+
+Se genera una semilla
+
+```{r}
+set.seed(2021)
+
+```
+
+Se generan 100 registros con datos de dos variables $x, y$, la primera
+con media $\bar{x}=50$ y desviación estándar $S=5$, la segunda con con
+media $\bar{x}=100$ y desviación estándar $S=10$.
+
+```{r}
+
+n <- 100 # cien datos
+datos <- data.frame(x = rnorm(n = n, mean = 50, sd = 10), y = rnorm(n = n, mean = 100, sd = 10))
+datos
+
+```
+
+### La correlación
+
+```{r}
+r <- cor(datos$x, datos$y)
+r
+
+chart.Correlation(datos)
+
+```
+
+Se observa que es una correlación negativa con valor de `r r` que
+significa una correlación negativa de muy débil a débil.
+
+### Prueba de significancia de la correlación
+
+#### Establecer hipótesis
+
+$$
+\text{Hipótesis nula}: H_0: Correlación = 0 \\
+\text{Hipótesis alternativa}: H_1: Correlación \neq 0
+$$
+
+#### Determinar un valor de t
+
+Utilizar funciones de la distribución *t student* para encontrar valores
+críticos de $t$ a un valor de confianza que puede ser
+$0.90, 0.95, 0.99$.
+
+Se debe calcular el valor de t con respecto a la correlación $r$ de la
+siguiente manera:
+
+#### Calcular el valor de t
+
+A partir de la fórmula
+
+```{r}
+n <- nrow(datos)
+t <-   r * (sqrt(n-2) / sqrt(1 - r^2))
+t
+```
+
+#### Determinar el valor crítico de t
+
+Se toma un nivel de confianza al $95\%$ usando la función de *qt()*
+
+```{r}
+confianza = 0.95
+t.critico <- qt(p = (1 - confianza) / 2, df = n-2, lower.tail = FALSE)
+t.critico
+```
+
+#### Gráfica de densidad t student
+
+Con la gráfica se ubica el valor de $t$ con respecto al valor de
+$t.critico$ y se estima si está en una zona de aceptación rechazo para
+concluir que se acepta o se rechaza la $H_0$.
+
+```{r}
+visualize.t(stat = c(-t.critico, t.critico), section = "tails", df = (n-2)) +
+  abline(v = t, col = "red", lwd = 3, lty = 2) +
+  text(0, 0.2, paste(confianza * 100, "%", sep = ""), col = "red") +
+  xlim(-6,6)
+
+```
+
+#### Aceptación de $H_0$ para prueba de significancia de la correlación
+
+El valor de $t = -1.456016$ está por debajo de t.critico $t = -1.984467$
+de tal forma que se entiende o interpreta que está en zona de
+aceptación.
+
+Al estar en zona de aeptación se acepta la $H_0$.
+
+Entonces con esto se asegura y se prueba que el valor del coeficiente de
+correlación que se obtuvo de la muestra sería un valor de cero en una
+población con un nivel de confianza del `r confianza * 100`% .
+
+Por lo anterior, tal vez nos serían datos para una modelo de regresión
+simple, sin embargo se va a genera el modelo.
+
+### Modelo de regresión simple
+
+```{r}
+modelo <- lm(data = datos, formula = y ~ x)
+modelo
+
+resumen <- summary(modelo)
+resumen
+
+```
+
+##### Dispersión y recta de regresión
+
+```{r}
+ggplot() + 
+  geom_point(data = datos, aes(x = x, y = y), colour='blue') +
+  geom_point(aes(x= mean(datos$x), y = mean(datos$y)), col = 'green') +
+  geom_line(aes( x = datos$x, y = predict(modelo, datos)), color = "red") +
+  xlab("x") + 
+  ylab("y") + 
+  ggtitle("Linea de tendencia sobre Conjunto de Datos")
+
+```
+
+##### Coeficiente a y b de la ecuación $Y = a + bx$
+
+```{r}
+a <- modelo$coefficients[1]
+b <- modelo$coefficients[2]
+a ; b
+
+```
+
+Se observa que el $t$ value es `r t`
+
+También se observa que el valor de $Pr(>|t|)$ del coeficiente de la
+pendiente $b$ no es estadísticamente significativo, no tiene algún
+**"\*"** o es mayor a 0.5.
+
+```{r}
+t <- resumen$coefficients[2, 3]
+t
+
+```
+
+### Valor de t.critico con *t student*
+
+Nivel de confianza del 95% con valor de t a una cola
+
+$$
+H_0: b \le 0 \\
+H_1: b > 0
+$$
+
+```{r}
+confianza = 0.95
+t.critico <- abs(qt(p = 1 - confianza, df = n-2))
+t.critico
+```
+
+```{r}
+visualize.t(t.critico, df = (n-2)) +
+  abline(v = t, col = "red", lwd = 3, lty = 2) +
+  text(0, 0.2, paste(confianza * 100, "%", sep = ""), col = "red") +
+  xlim(-6,6)
+
+```
+
+Nivel de confianza del 95% con valor de t a dos colas
+
+$$
+H_0: b = 0 \\
+H_1: b \neq 0
+$$
+
+```{r}
+confianza = 0.95
+t.critico <- abs(qt(p = (1 - confianza) /2 , df = n-2))
+t.critico
+```
+
+```{r}
+visualize.t(stat = c(-t.critico, t.critico), section = "tails", df = (n-2)) +
+  abline(v = t, col = "red", lwd = 3, lty = 2) +
+  text(0, 0.2, paste(confianza * 100, "%", sep = ""), col = "red") +
+  xlim(-6,6)
+
+```
+
+El valor de t está dentro de zona de aceptación de $H_0$
+
+Con estos valores de t comparados con cualquier valor de t.critico se
+interpreta que estos datos de la muestra a un 95% de nivel de confianza
+se debe aceptar la $H_0$ y rechazar la $H_1$ con lo cual se concluye que
+el valor de la pendiente no es un buen predictor significativo para la
+ecuación.
+
+El modelo de regresión lineal simple para estos datos no es adecuado pare predicciones.
+
+# Interpretación
+
+Pendiente
+
+# Bibliografía
