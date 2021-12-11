@@ -22,16 +22,13 @@ coeficiente la pendiente en modelos de regresión lineal simple.
 
 # Descripción
 
-Se construyen unos datos relacionados con el caso anterior de llamadas y
-ventas.
+Se construyen unos datos relacionados con el caso anterior de llamadas y ventas y en otros datos aleatorios x e y.
 
 Se determina el coeficiente de correlación de Pearson $r$
 
 Se determina el valor del coeficiente de determinación $r^2$
 
-Se hace la prueba de significancia para determinar si la correlación
-estimada de una población es diferente de cero para rechazar o aceptar
-una hipótesis nula.
+Se hace la prueba de significancia para determinar si la correlación estimada de una población es diferente de cero para rechazar o aceptar una hipótesis nula.
 
 Se construye el modelo de regresión linea con la ecuación de mínimos
 cuadrados $Y = a + bx$
@@ -63,7 +60,7 @@ alternativa.
 Hay dos pruebas que se describen en este caso:
 
 -   Prueba de significancia para correlación $r$ para saber si la
-    correlación sería difenrete de cero en una población.
+    correlación sería diferente de cero en una población.
 
 -   Prueba de significancia para la pendiente $b$ para saber si
     estadísticamente el valor de la pendiente de la recta de estimación
@@ -173,8 +170,8 @@ t = r \cdot \frac{\sqrt{n-2}}{\sqrt{1 - r^2}}
 $$
 
 $$
-r el valor de la correlación 
-(n-2) grados de libertad
+r \text{ el valor de la correlación} \\
+(n-2) \text{ grados de libertad}
 $$
 
 #### Calcular el valor de t
@@ -246,7 +243,7 @@ t = \frac{b-0}{S_b} \therefore
 $$
 
 $$
-S_b = \frac{\sqrt{\frac{(y_i - Y)^2}{(n-2)}}}{\sqrt{(x_i-\bar{x})^2}}
+S_b = \frac{\sqrt{\frac{\sum(y_i - Y)^2}{(n-2)}}}{\sqrt{\sum(x_i-\bar{x})^2}}
 $$
 
 $$
@@ -425,7 +422,7 @@ set.seed(2021)
 ```
 
 Se generan 100 registros con datos de dos variables $x, y$, la primera
-con media $\bar{x}=50$ y desviación estándar $S=5$, la segunda con con
+con media $\bar{x}=50$ y desviación estándar $S=10$, la segunda con con
 media $\bar{x}=100$ y desviación estándar $S=10$.
 
 ```{r}
@@ -507,14 +504,15 @@ El valor de $t = -1.456016$ está por debajo de t.critico $t = -1.984467$
 de tal forma que se entiende o interpreta que está en zona de
 aceptación.
 
-Al estar en zona de aeptación se acepta la $H_0$.
+Al estar en zona de aceptación se acepta la $H_0$.
 
 Entonces con esto se asegura y se prueba que el valor del coeficiente de
 correlación que se obtuvo de la muestra sería un valor de cero en una
 población con un nivel de confianza del `r confianza * 100`% .
 
-Por lo anterior, tal vez nos serían datos para una modelo de regresión
-simple, sin embargo se va a genera el modelo.
+Por lo anterior, tal vez ¡no serían! datos para una modelo de regresión lineal simple, sin embargo se va a genera el modelo.
+
+## Prueba de significancia de b
 
 ### Modelo de regresión simple
 
