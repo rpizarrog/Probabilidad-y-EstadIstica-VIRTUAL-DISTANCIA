@@ -88,7 +88,7 @@ library(leaflet)  # Para hacer mapas
 
 ```{r warning=FALSE, message=FALSE}
 
-source("https://raw.githubusercontent.com/rpizarrog/Trabajos-en-R-AD2021/main/funciones/construir%20datos%20y%20funciones.r", encoding = "UTF-8")
+source("https://raw.githubusercontent.com/rpizarrog/Probabilidad-y-EstadIstica-VIRTUAL-DISTANCIA/main/funciones/construir%20datos%20y%20funciones.r", encoding = "UTF-8")
 
 kable(head(personas, 10), caption = "Los primeros diez registros de nombres en el conjunto dedatos")
 kable(tail(personas, 10), caption = "Las útimos diez registros de nombres en el conjunto de datos")
@@ -107,10 +107,17 @@ kable(tail(personas, 10), caption = "Las útimos diez registros de nombres en el
     -   Carrera
 
 ```{r warning=FALSE, message=FALSE}
-alumnos <- read_csv("https://raw.githubusercontent.com/rpizarrog/Trabajos-en-R-AD2021/main/datos/datos%20alumnos.csv")
+alumnos <- read_csv("https://raw.githubusercontent.com/rpizarrog/Probabilidad-y-EstadIstica-VIRTUAL-DISTANCIA/main/datos/datos%20alumnos.csv")
 
 kable(head(alumnos, 10), caption = "Los primeros diez registros de alumnos")
 kable(tail(alumnos, 10), caption = "Las útimos diez registros de alumnos")
+
+```
+
+### Sembrar una semilla
+
+```{r}
+set.seed(2021)
 
 ```
 
@@ -243,17 +250,20 @@ kable(muestracivil, caption = "La muestra de alumnos de Civil")
 N <- nrow(alumnos)
 n <- 100
 
-locdurangomx <- read.csv("https://raw.githubusercontent.com/rpizarrog/probabilidad-y-estad-stica/master/datos/locdurangomx.csv", encoding = "UTF-8")
+locdurangomx <- read.csv("https://raw.githubusercontent.com/rpizarrog/Probabilidad-y-EstadIstica-VIRTUAL-DISTANCIA/main/datos/locdurangomx.csv", encoding = "UTF-8")
 
 ```
 
 Segundo por medio de función **sample()** generar cinco registros aleatorios de localidades y agregar un sexto registro de Victoria de Durango.
 
+Las localidades será un domicilio para simular el lugar en donde geográficamente viven los alumnos.
+
 ```{r}
-set.seed(1000)
+set.seed(2021)
 localidades6 <- locdurangomx[sample(nrow(locdurangomx), 5), ]
 
 localidades6 <- rbind(localidades6, locdurangomx[1,])
+localidades6
 
 ```
 
@@ -294,6 +304,7 @@ kable(tabla_frec, caption = "Tabla de frecuencia de alumnos por localidad")
 N <- nrow(alumnos)
 n <- 100
 
+# Determinar cada conglomerado
 loc1 <- filter(alumnos, localidad == tabla_frec$Category[1])
 loc2 <- filter(alumnos, localidad == tabla_frec$Category[2])
 loc3 <- filter(alumnos, localidad == tabla_frec$Category[3])
@@ -302,7 +313,7 @@ loc5 <- filter(alumnos, localidad == tabla_frec$Category[5])
 loc6 <- filter(alumnos, localidad == tabla_frec$Category[6])
 
 
-
+# Determinar frecuencias de cada conglomerado similiar a la tabla tabla_frec
 frloc1 <- nrow(loc1) / N
 frloc2 <- nrow(loc2) / N
 frloc3 <- nrow(loc3) / N
@@ -310,6 +321,7 @@ frloc4 <- nrow(loc4) / N
 frloc5 <- nrow(loc5) / N
 frloc6 <- nrow(loc6) / N
 
+# Crear muestras
 muestraloc1 <- sample(loc1, round(n * frloc1, 0))
 kable(muestraloc1, caption = paste("La muestra de alumnos de Localidad ",tabla_frec$Category[1] ))
 
@@ -341,10 +353,9 @@ kable(muestraloc6, caption = paste("La muestra de alumnos de Localidad ",tabla_f
 
 map<-leaflet() %>%
   addTiles() %>%
-  addMarkers(lat=localidades6$Lat_Decimal[1],lng=localidades6$Lon_Decimal[1] ,popup=localidades6$Nom_Loc[1]) %>%
+  addMarkers(lat=localidades6$Lat_Decimal[1],lng=localidades6$Lon_Decimal[1] ,popup = localidades6$Nom_Loc[1]) %>%
    addMarkers(lat=localidades6$Lat_Decimal[2],lng=localidades6$Lon_Decimal[2] ,popup=localidades6$Nom_Loc[2]) %>%
-   addMarkers(lat=localidades6$Lat_Decimal[3],lng=localidades6$Lon_Decimal[3] ,popup=localidades6$Nom_Loc[3]) %>%
-   addMarkers(lat=localidades6$Lat_Decimal[4],lng=localidades6$Lon_Decimal[4] ,popup=localidades6$Nom_Loc[4]) %>%
+   addMarkers(lat=localidades6$Lat_Decimal[3],lng=localidades6$Lon_Decimal[3] ,popup=localidades6$Nom_Loc[4]) %>%
    addMarkers  (lat=localidades6$Lat_Decimal[5],lng=localidades6$Lon_Decimal[5] ,popup=localidades6$Nom_Loc[5]) %>%
    addMarkers  (lat=localidades6$Lat_Decimal[6],lng=localidades6$Lon_Decimal[6] ,popup=localidades6$Nom_Loc[6])
 # Mostrar el mapa 
