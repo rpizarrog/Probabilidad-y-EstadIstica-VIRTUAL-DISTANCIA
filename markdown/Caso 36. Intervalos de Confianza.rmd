@@ -1,5 +1,5 @@
 ---
-title: "Caso 36. Intervalos de Confianza"
+title: "Caso 36. Intervalos de Confianza para media poblacional"
 author: "Rubén Pizarro Gurrola"
 date: "15/12/2021"
 output: 
@@ -106,6 +106,8 @@ source("https://raw.githubusercontent.com/rpizarrog/Probabilidad-y-EstadIstica-V
 
 ### Intervalo de confianza con desviación estándar conocida
 
+![](images/contaminantes%20en%20comida.jfif){width="400"}
+
 Un científico interesado en vigilar contaminantes químicos en alimentos y, por lo tanto, la acumulación de contaminantes en la dieta humana, seleccionó una muestra aleatoria de $n=50$ adultos hombres.
 
 Se encontró que el promedio de ingesta diaria de productos lácteos fue de $\bar{x} = 756$ gramos por día, con una desviación estándar de s $s = 35$ gramos por día.
@@ -170,6 +172,8 @@ visualize.norm(stat = c(-z.critico, z.critico), section = "tails") +
 # 
 
 ### Intervalo de confianza con desviación estándar desconocida
+
+![](images/oso%20polar.jpg){width="400"}
 
 Un ambientalista está realizando un estudio del oso polar, especie que se encuentra en el océano Ártico y sus alrededores. Su zona de distribución está limitada por la existencia de hielo en el mar, que usan como plataforma para cazar focas, principal sostén de los osos.
 
