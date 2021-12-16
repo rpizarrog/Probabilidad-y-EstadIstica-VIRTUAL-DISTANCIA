@@ -1,0 +1,53 @@
+---
+title: "Caso 37. Prueba de Hipótesis"
+author: "Rubén Pizarro Gurrola"
+date: "15/12/2021"
+output: 
+  html_document:
+    code_folding: hide
+    toc: true
+    toc_float: true
+    toc_depth: 6
+bibliography: references.bib
+---
+
+# Objetivo
+
+Realizar pruebas de hipótesis de una y dos colas.
+
+
+# Descripción
+
+Aspectos generales del caso
+
+# Fundamento teórico
+
+Aspectos teóricos del tema
+
+# Desarrollo
+
+## Cargar librerías
+```{r}
+# Pendiente
+```
+
+## Cargar funciones
+```{r}
+# Pendiente
+```
+
+
+### Prueba de hipótesis de una cola
+
+Pendiente
+
+### Prueba de hipótesis de dos colas
+Pendiente
+
+# Interpretación
+
+Son ideas personales de los participantes, alumnos sobre lo que se desarrolla, a que conclusiones llegan
+
+Dos o tras párrafos de 50 palabras cada uno aproximadamente.
+
+# Bibliografía

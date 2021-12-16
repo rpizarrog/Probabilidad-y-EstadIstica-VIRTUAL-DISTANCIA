@@ -1,0 +1,66 @@
+---
+title: "Caso 36. Intervalos de Confianza"
+author: "Rubén Pizarro Gurrola"
+date: "15/12/2021"
+output: 
+  html_document:
+    code_folding: hide
+    toc: true
+    toc_float: true
+    toc_depth: 6
+bibliography: references.bib
+---
+
+# Objetivo
+
+Determinar intervalos de confianza con desviación estándar de la población conocida y desconocida.
+
+# Descripción
+
+Se calculan inntéravlos de confianza con varios ejercicios extraídos de la literatura
+
+# Fundamento teórico
+
+## Fórmula para desviación estándar de la población conocida.
+
+$$
+IC = \bar{x} \pm z \cdot \frac{S}{\sqrt{n}}
+$$
+
+## Fórmula para desviación estándar de la población no conocida.
+
+$$
+IC = \bar{x} \pm t \cdot \frac{S}{\sqrt{n}}
+$$
+
+# Desarrollo
+
+## Cargar librerías
+
+```{r}
+library(visualize) # Gráficos de distribuciones
+library(cowplot) # Gráficos
+library(ggplot2) # Gráficos
+```
+
+## Cargar funciones
+
+```{r}
+# Pendiente
+```
+
+### Intervalo de confianza con desviación estándar conocida
+
+Pendiente
+
+### Intervalo de confianza con desviación estándar desconocida
+
+Pendiente
+
+# Interpretación
+
+Son ideas personales de los participantes, alumnos sobre lo que se desarrolla, a que conclusiones llegan
+
+Dos o tras párrafos de 50 palabras cada uno aproximadamente.
+
+# Bibliografía
