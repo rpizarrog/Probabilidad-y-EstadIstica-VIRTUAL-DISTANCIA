@@ -134,6 +134,11 @@ f.devolver.z <- function(x, media, desv) {
   z
 }
 
+f.devolver.z.prueba <- function(media.m, desv.m, media.p, n) {
+  z <- (media.m - media.p) / (desv.m / sqrt(n))
+  z
+}
+
 
 # Función para devolver Z para Intervalo de Confianza
 f.z.int.conf <- function (confianza) {
