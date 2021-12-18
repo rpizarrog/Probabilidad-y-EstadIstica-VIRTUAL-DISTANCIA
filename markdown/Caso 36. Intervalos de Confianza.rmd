@@ -71,15 +71,15 @@ aportar información de qué tan cerca se encuentra la estimación puntual, obte
 
 Se identifican las fórmulas para estimar intervalos de confianza con desviación poblacional conocida y no conocida respectivamente.
 
-## Fórmula para desviación estándar de la población conocida.
+## Fórmula para desviación estándar SI conocida en la población.
 
 $$
-IC = \bar{x} \pm z \cdot \frac{S}{\sqrt{n}}
+IC = \bar{x} \pm z \cdot \frac{\sigma}{\sqrt{n}}
 $$
 
 [@lind2015]
 
-## Fórmula para desviación estándar de la población no conocida.
+## Fórmula para desviación estándar No conocida en la población.
 
 $$
 IC = \bar{x} \pm t \cdot \frac{S}{\sqrt{n}}
