@@ -368,9 +368,105 @@ visualize.t(stat = c(-t.critico, t.critico),  df = n-1, section = "tails") +
                      (1 - confianza) /  2, sep = ""),  col = "black")
 ```
 
+## Función *z.test()* 
+
+R dispone de la función *z.test()* para determinar entre muchas otras cosas intervalos de confianza a partir de datos de una muestra con desviación estándar de población SI conocida. Es decir, usando distribución *normal de z.*
+
+Para usar la función *z.test()* de manera especial se debe instalar el paquete "BSDA". Ejecutar *install.packages("BSDA")* , luego cargar la librería, antes de utilizar dicha función.
+
+```{r message=FALSE, warning=FALSE}
+library(BSDA)
+
+```
+
+Se utiliza un ejemplo del ejercicio del científico para investigar contaminantes en la comida y estimar intervalos de confianza a partir de una muestra de $n=50$ y de media aproximada de $756$ con desviación aproximada de $35$.
+
+### Datos
+
+Se espera tener los niveles de confianza al 90%, 95% y 99% respectivamente.
+
+Se inicializan variables.
+
+```{r}
+confianza <- c(0.90, 0.95, 0.99)
+n <- 50
+media <- 756
+desv <- 35
+```
+
+### Generando la muestra
+
+Se simula una muestra de $n=50$ de tipo normal a dos posiciones decimales alrededor de la media y la desviación establecida.
+
+```{r}
+muestra <- round(rnorm(n = n, mean = media, sd = desv),2)
+
+muestra
+
+```
+
+### Media de muestra y desviación 
+
+Se determina la media y desviación estándar de los simulados a partir de la muestra.
+
+```{r}
+media.m <- mean(muestra)
+desv.m <- desv.p <- sd(muestra)
+media.m; desv.m
+
+```
+
+### Niveles de confianza 
+
+Se determinan los intervalos de confianza a 90%, 95% y 99% repectivamente, primero usando *z.test()* y luego la función *f.intervalo.confianza.z()* para comparar los resultados.
+
+#### Niveles al 90%
+
+```{r}
+IC <- z.test(x = muestra, sigma.x = desv.p, conf.level = confianza[1])
+IC$conf.int
+
+```
+
+```{r}
+intervalo <- f.intervalo.confianza.z(media = media.m, desv = desv.p, confianza = confianza[1], n = n)
+intervalo
+
+```
+
+#### Niveles al 95%
+
+```{r}
+IC <- z.test(x = muestra, sigma.x = desv.p, conf.level = confianza[1])
+IC$conf.int
+
+```
+
+```{r}
+intervalo <- f.intervalo.confianza.z(media = media.m, desv = desv.p, confianza = confianza[2], n = n)
+intervalo
+
+```
+
+#### Niveles al 99%
+
+```{r}
+IC <- z.test(x = muestra, sigma.x = desv.p, conf.level = confianza[3])
+IC$conf.int
+
+```
+
+```{r}
+intervalo <- f.intervalo.confianza.z(media = media.m, desv = desv.p, confianza = confianza[3], n = n)
+intervalo
+
+```
+
 ## Función *t.test()* 
 
-R dispone de la función *t.test()* para determinar entre muchas otras cosas intervalos de confianza a partir de datos de una muestra.
+R dispone de la función *t.test()* para determinar entre muchas otras cosas intervalos de confianza a partir de datos de una muestra con desviación estándar de población desconocida. Es decir, usando distribución *t student* .
+
+Para usar la función *t.test()*, no se requiere cargar ninguna librería, ya que forma parte de los paquetes base de R.
 
 Se utiliza un ejemplo del ejercicio del ambientalista para estimar intervalos de confianza a partir de muestra de $n=50$ y de media aproximada de $980$ con desviación aproximada de $105$
 
