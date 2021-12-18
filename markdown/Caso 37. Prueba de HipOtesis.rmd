@@ -176,7 +176,7 @@ La hipótesis nula se asocia con la igualdad
 |  $$                    |                                $$           |                                             $$                   |
 +------------------------+---------------------------------------------+------------------------------------------------------------------+
 | $$                     | $$                                          | $$                                                               |
-|  H_a: \mu \neq \mu_0   |                          H_0: \mu < \mu_0   |                                             H_0: \mu > \mu_0     |
+|  H_a: \mu \neq \mu_0   |                          H_a: \mu < \mu_0   |                                             H_a: \mu > \mu_0     |
 |  $$                    |                                $$           |                                             $$                   |
 +------------------------+---------------------------------------------+------------------------------------------------------------------+
 
@@ -198,7 +198,7 @@ Ejemplo: una cola izquierda: Le media de población es mayor o igual a 50, la pr
              $$      |
 |:------------------:|
 |      $$            
-     H_0: \mu < 50   
+     H_a: \mu < 50   
              $$      |
 
 Ejemplo: una cola derecha: Le media de población es menor o igual a 50, la pregunta de investigación es que la media es menor de 50.
@@ -208,7 +208,7 @@ Ejemplo: una cola derecha: Le media de población es menor o igual a 50, la preg
              $$      |
 |:------------------:|
 |      $$            
-     H_0: \mu > 50   
+     H_a: \mu > 50   
              $$      |
 
 ### Ejemplo: Simular una población y una muestra
@@ -314,7 +314,7 @@ visualize.norm(stat = c(-z.critico, z.critico), section = "tails") +
 
 ```
 
-#### Contrastar o Concluir con hipótesis de dos colas para z 
+### Contrastar o Concluir con hipótesis de dos colas para z 
 
 ```{r}
 # Se contrasta por la izq y dercha
@@ -331,7 +331,65 @@ conclusion
 
 ### Prueba de hipótesis de una cola z
 
-Pendiente
+La pregunta de investigación es: la media es menor que 33.5
+
+Se declara una hipótesis de una cola por la izquerida
+
+|       $$             
+    H_0: \mu \ge 33.5  
+              $$       |
+|:--------------------:|
+|       $$             
+     H_a: \mu < 33.5   
+              $$       |
+
+#### Determinar valores de z prueba y z critico
+
+##### z.prueba
+
+```{r}
+z <- f.devolver.z.prueba(media.m = media.m, media.p = media.p, desv.p = desv.p, n = n)
+z
+
+```
+
+##### z.critico
+
+Se definen un nivel de confianza del 95%
+
+```{r}
+confianza = 0.95
+
+# Una cola izquierda
+alfa <- (1 - confianza)
+z.critico.izq <- qnorm(p = alfa)
+z.critico.izq
+```
+
+#### Visualizar z y z prueba
+
+```{r}
+visualize.norm(stat = c(z.critico.izq), section = "lower") +
+  text(0, 0.2, paste(confianza * 100, "%", "\n", 
+                     "alfa=", (1 - confianza), "\n", "Acepta Ho", sep = ""),  col = "black") + 
+  abline(v = z, col='red', lwd = 1, lty= 4)
+
+```
+
+### Contrastar o Concluir con hipótesis de dos colas para z 
+
+```{r}
+# Se contrasta por la izq y dercha
+conclusion <- "Acepta Ho"
+if (z < z.critico.izq)
+    conclusion = "Se rechaza Ho"
+
+conclusion
+
+
+```
+
+
 
 ### Prueba de hipótesis de dos colas t
 
