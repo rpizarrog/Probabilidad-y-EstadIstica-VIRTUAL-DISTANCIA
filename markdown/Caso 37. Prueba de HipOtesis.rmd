@@ -284,14 +284,15 @@ La media es diferente de 35
 ##### z.prueba
 
 ```{r}
-z <- f.devolver.z.prueba(media.m = media.m, media.p = media.p, desv.p = desv.p, n = n)
+media.a.comparar <- 35
+z <- f.devolver.z.prueba(media.m = media.m, media.p = media.a.comparar, desv.p = desv.p, n = n)
 z
 
 ```
 
 ##### z.critico
 
-Se definen un nivel de confiazna del 95%
+Se definen un nivel de confianza del 95%
 
 ```{r}
 confianza = 0.95
@@ -348,7 +349,8 @@ Se declara una hipótesis de una cola por la izquerida
 ##### z.prueba
 
 ```{r}
-z <- f.devolver.z.prueba(media.m = media.m, media.p = media.p, desv.p = desv.p, n = n)
+media.a.comparar <- 33.5
+z <- f.devolver.z.prueba(media.m = media.m, media.p = media.a.comparar, desv.p = desv.p, n = n)
 z
 
 ```
@@ -379,7 +381,7 @@ visualize.norm(stat = c(z.critico.izq), section = "lower") +
 ### Contrastar o Concluir con hipótesis de dos colas para z 
 
 ```{r}
-# Se contrasta por la izq y dercha
+# Se contrasta por la izquierda y derecha
 conclusion <- "Acepta Ho"
 if (z < z.critico.izq)
     conclusion = "Se rechaza Ho"
