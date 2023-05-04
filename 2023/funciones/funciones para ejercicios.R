@@ -46,7 +46,7 @@ f_crear_datos_personas <- function(n, semilla) {
                'F', 'F', 'M', 'F', 'M'
   )
   
-  edades <- rnorm(n = n, mean = 20, sd = 5)
+  edades <- rnorm(n = n, mean = 38, sd = 10)
   estaturas <- rnorm(n = n, mean = 160, sd = 8)
   estado_civil <- sample(x = c("SOLTERO", "CASADO", "DIVORCIADO", "VIUDO", "UNION LIBRE"), 
                          size = n, replace = TRUE, prob = c(0.24, 0.26, 0.18, 0.12, 0.20))
