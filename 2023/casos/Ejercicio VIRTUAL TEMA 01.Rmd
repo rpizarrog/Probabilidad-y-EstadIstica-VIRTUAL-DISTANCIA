@@ -1,0 +1,210 @@
+---
+title: "Ejercicio Tema 01"
+author: "Rubén Pizarro Gurrola"
+date: "2023-03-05"
+output: 
+  html_document: 
+    toc: yes
+    toc_depth: 5
+    code_folding: hide
+    toc_float: yes
+    number_sections: yes
+---
+
+# Objetivo
+
+Realizar un análisis descriptivo de un conjunto de datos simulado con cuatro variables de interés.
+
+# Desarrollo
+
+Se solicita desarrollar un documento *markdown* y publicar en el servicio *rpubs* en su cuenta personal con el análisis descriptivo correspondiente de los datos.
+
+## Cargar librerías
+```{r message=FALSE, warning=FALSE}
+library(readr)
+library(fdth)
+library(dplyr)
+library(ggplot2)
+
+```
+
+## Cargar funcoines preparadas
+```{r}
+source("https://raw.githubusercontent.com/rpizarrog/Probabilidad-y-EstadIstica-VIRTUAL-DISTANCIA/main/2023/funciones/funciones%20para%20ejercicios.R")
+```
+
+## Crear los datos
+
+Crear vector nombres aleatoriamente a partir de 350 nombres comunes.Se debe cambiar la semilla.
+
+```{r}
+datos <- f_crear_datos_personas(n = 350, semilla = 2023)
+datos
+```
+
+## Presentar un resumen descriptivo de los datos
+
+```{r}
+summary(datos)
+```
+
+¿Cual es el nombre que más se repite y con qué frecuencia?
+```{r}
+tabla <- data.frame(fdt_cat(datos$nombres))
+tabla
+```
+
+## Presentar un diagrama de barra de nombres
+
+Con los cinco (top 5) de la variable nombres de los que más se repiten
+Elaborarlo con ggplot
+```{r}
+ggplot(data = head(tabla, 5), aes(x = Category, y = f)) +
+  geom_col()
+
+```
+
+
+¿De que género hay mas personas FEMENINO F O MASCULINO M y cuál es el porcentaje o frecuencia porcentual?
+```{r}
+tabla <- fdt_cat(datos$generos)
+tabla
+```
+
+## Presentar un diagrama de barra de la variable generos
+
+Elaborarlo con ggplot
+```{r}
+ggplot(data = head(tabla, 5), aes(x = Category, y = f)) +
+  geom_col()
+```
+
+
+¿Cuál es la media aritmética de la edad del conjunto de datos?
+```{r}
+media <- mean(datos$edades)
+media
+```
+
+
+¿Cuál es la desviación estándar de la edad del conjunto de datos?
+```{r}
+desv_std <- sd(datos$edades)
+desv_std
+```
+
+## Presentar un histograma de edades
+
+Elaborarlo con ggplot con lineas de la media en rojo y desviaci+on en azul punteadas
+```{r}
+ggplot(data = datos) +
+  geom_histogram(aes(x = edades), bins=30) +
+  geom_vline(xintercept = media, color = 'red', linetype = "dashed", size = 1) +
+   geom_vline(xintercept = media - desv_std, color = 'blue', linetype = "dashed", size = 1) +
+  geom_vline(xintercept = media + desv_std, color = 'blue', linetype = "dashed", size = 1) +
+   labs(title="Edades", subtitle = paste("Media", round(media, 2), "± Desv. Std", round(desv_std, 2)), x="Edades", y="Frecuencia")
+  
+```
+
+¿Qué significa el valor de la desviación estándar de la variable edad del conjunto de datos?
+
+
+¿Cuál es la media aritmética de la estaturas del conjunto de datos
+```{r}
+media <- mean(datos$estaturas)
+media
+```
+
+¿Cuál es la desviación estándar de la estaturas del conjunto de datos
+```{r}
+desv_std <- sd(datos$estaturas)
+desv_std
+```
+
+## Presentar un histograma de estaturas
+
+Elaborarlo con ggplot con lineas de la media en rojo y desviación estándar en azul punteadas
+```{r}
+ggplot(data = datos) +
+  geom_histogram(aes(x = estaturas), bins=30) +
+  geom_vline(xintercept = media, color = 'red', linetype = "dashed", size = 1) +
+   geom_vline(xintercept = media - desv_std, color = 'blue', linetype = "dashed", size = 1) +
+  geom_vline(xintercept = media + desv_std, color = 'blue', linetype = "dashed", size = 1) +
+   labs(title="Estaturas", subtitle = paste("Media", round(media, 2), "± Desv. Std", round(desv_std, 2)), x="Edades", y="Frecuencia")
+  
+```
+
+
+¿Qué significa el valor de la desviación estándar de la variable estaturas del conjunto de datos?
+
+
+
+¿Cual es la frecuencia de la variable estado civil del conjunto de datos?
+```{r}
+tabla <- fdt_cat(datos$estado_civil)
+tabla
+```
+
+## Presentar un diagrama de barra de la variable generos
+
+Elaborarlo con ggplot con colores diferentes 
+
+```{r}
+ggplot(data = head(tabla, 5), aes(x = Category, y = f, fill = Category)) +
+  geom_col()
+```
+
+## De las personas casadas, ¿cúal es el género que más hay?
+
+Con table se generan tablas simple y combinadas, en este caso con las dos variables de interés.
+
+```{r}
+tabla <- table(datos$generos, datos$estado_civil)
+tabla
+```
+
+
+## Crear un diagrama de barra apilado
+
+```{r}
+ggplot(data = datos, aes(x = estado_civil, fill = generos)) +
+  geom_bar()
+```
+
+## Exraer una muestra de 25 nombres
+
+## Comparar variables de la meustra edad y estauras con las mismas variables de la pobación.
+
+De la muestra hacer un resume() de la muestra y comparar estadísticos de la muestra de la variable edad y estarura con respecto a los parámetros de la población de las mismas variables
+
+
+```{r}
+n <-25
+# la muestra pendiente
+# muestra <- #
+  
+```
+
+## Elaborar diagrama de caja con la variable edad por genero
+
+¿Cual es la mediana, el primer y el tercer cuartil de la edad?
+
+## Elaborar diagramas de caja con las variable estatura
+
+¿Cual es la mediana, el primer y tercer cuartil de la estatura?
+
+## Elaborar diagrama de caja con la variable edad por genero
+
+
+## Elaborar diagrama de caja con la variable estatura por genero
+
+
+
+
+
+
+# Interprtar todo el ejercicio
+
+Redactar con sus propias palabras lo que les deja el caso alrededor de 100 palabras o más.
+
+
